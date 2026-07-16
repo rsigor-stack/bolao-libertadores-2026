@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Bolão Copa Libertadores da América 2026"
+    >
+
+    <title>
+        Bolão Libertadores 2026
+    </title>
+
+
+    <!-- CSS PRINCIPAL -->
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ============================================================
+         APLICAÇÃO
+         ============================================================ -->
+
+
+    <div
+        id="app"
+    >
+
+
+        <!-- ========================================================
+             TELA DE LOGIN
+             ======================================================== -->
+
+
+        <section
+            id="tela-login"
+            class="tela"
+        >
+
+            <div
+                class="login-container"
+            >
+
+                <h1>
+                    Bolão Libertadores 2026
+                </h1>
+
+
+                <p>
+                    Faça login para acessar seus palpites.
+                </p>
+
+
+                <form
+                    id="form-login"
+                >
+
+                    <div
+                        class="campo-formulario"
+                    >
+
+                        <label
+                            for="login-participante"
+                        >
+
+                            Participante
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="login-participante"
+                            name="participante"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div
+                        class="campo-formulario"
+                    >
+
+                        <label
+                            for="login-senha"
+                        >
+
+                            Senha
+
+                        </label>
+
+
+                        <input
+                            type="password"
+                            id="login-senha"
+                            name="senha"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        id="btn-login"
+                    >
+
+                        Entrar
+
+                    </button>
+
+
+                    <div
+                        id="login-mensagem"
+                        class="mensagem"
+                        aria-live="polite"
+                    ></div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================================
+             TELA PRINCIPAL
+             ======================================================== -->
+
+
+        <section
+            id="tela-principal"
+            class="tela"
+            hidden
+        >
+
+
+            <header
+                id="cabecalho-principal"
+            >
+
+                <div>
+
+                    <h1>
+                        Bolão Libertadores 2026
+                    </h1>
+
+
+                    <p
+                        id="usuario-logado"
+                    ></p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="btn-logout"
+                >
+
+                    Sair
+
+                </button>
+
+            </header>
+
+
+            <main>
+
+
+                <!-- =================================================
+                     NAVEGAÇÃO
+                     ================================================= -->
+
+
+                <nav
+                    id="navegacao-principal"
+                    aria-label="Navegação principal"
+                >
+
+                    <button
+                        type="button"
+                        class="nav-btn ativo"
+                        data-tela="tela-palpites"
+                    >
+
+                        Palpites
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="nav-btn"
+                        data-tela="tela-ranking"
+                    >
+
+                        Ranking
+
+                    </button>
+
+                </nav>
+
+
+                <!-- =================================================
+                     SEÇÃO DE PALPITES
+                     ================================================= -->
+
+
+                <section
+                    id="tela-palpites"
+                    class="conteudo-tela"
+                >
+
+                    <header
+                        class="cabecalho-secao"
+                    >
+
+                        <h2>
+                            Meus palpites
+                        </h2>
+
+
+                        <p>
+                            Faça seus palpites para os jogos da Libertadores 2026.
+                        </p>
+
+                    </header>
+
+
+                    <div
+                        id="lista-jogos"
+                    >
+
+                        <!-- Jogos carregados via JavaScript -->
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     SEÇÃO DE RANKING
+                     ================================================= -->
+
+
+                <section
+                    id="tela-ranking"
+                    class="conteudo-tela"
+                    hidden
+                >
+
+                    <header
+                        class="cabecalho-secao"
+                    >
+
+                        <h2>
+                            Ranking
+                        </h2>
+
+
+                        <p>
+                            Classificação dos participantes do bolão.
+                        </p>
+
+                    </header>
+
+
+                    <div
+                        id="ranking-container"
+                    >
+
+                        <!-- Ranking carregado via JavaScript -->
+
+                    </div>
+
+                </section>
+
+
+            </main>
+
+
+        </section>
+
+
+    </div>
+
+
+    <!-- ============================================================
+         JAVASCRIPT
+         ============================================================ -->
+
+
+    <script
+        src="js/app.js"
+    ></script>
+
+
+</body>
+
+</html>
