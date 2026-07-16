@@ -253,3 +253,126 @@ function realizarLogout() {
     }
 
 }
+
+/**
+ * ============================================================================
+ * EVENTOS DA INTERFACE
+ * ============================================================================
+ */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+
+        if (
+            event.target.id ===
+            "btn-login"
+        ) {
+
+            realizarLogin();
+
+        }
+
+
+        if (
+            event.target.id ===
+            "btn-logout"
+        ) {
+
+            realizarLogout();
+
+        }
+
+
+        if (
+            event.target.classList
+                .contains(
+                    "nav-btn"
+                )
+        ) {
+
+            alternarSecao(
+                event.target.dataset.tela
+            );
+
+        }
+
+    }
+);
+
+/**
+ * ============================================================================
+ * NAVEGAÇÃO ENTRE SEÇÕES
+ * ============================================================================
+ */
+
+function alternarSecao(
+    secao
+) {
+
+
+    const secaoJogos =
+        document.getElementById(
+            "secao-jogos"
+        );
+
+
+    const secaoRanking =
+        document.getElementById(
+            "secao-ranking"
+        );
+
+
+    const botoes =
+        document.querySelectorAll(
+            ".nav-btn"
+        );
+
+
+    if (
+        secao ===
+        "jogos"
+    ) {
+
+        secaoJogos.hidden =
+            false;
+
+
+        secaoRanking.hidden =
+            true;
+
+    }
+
+
+    if (
+        secao ===
+        "ranking"
+    ) {
+
+        secaoJogos.hidden =
+            true;
+
+
+        secaoRanking.hidden =
+            false;
+
+    }
+
+
+    botoes.forEach(
+        function(botao) {
+
+            botao.classList.toggle(
+
+                "ativo",
+
+                botao.dataset.tela ===
+                secao
+
+            );
+
+        }
+    );
+
+}
