@@ -48,98 +48,83 @@
              ======================================================== -->
 
 
-        <section
-            id="tela-login"
-            class="tela"
+<section
+    id="tela-login"
+    class="tela"
+>
+
+    <div
+        class="login-container"
+    >
+
+        <h1>
+            Bolão Libertadores 2026
+        </h1>
+
+
+        <p>
+            Faça login para registrar seus palpites.
+        </p>
+
+
+        <div
+            class="campo-formulario"
         >
 
-            <div
-                class="login-container"
+            <label
+                for="login-participante"
+            >
+                Participante
+            </label>
+
+
+            <input
+                id="login-participante"
+                type="text"
             >
 
-                <h1>
-                    Bolão Libertadores 2026
-                </h1>
+        </div>
 
 
-                <p>
-                    Faça login para acessar seus palpites.
-                </p>
+        <div
+            class="campo-formulario"
+        >
+
+            <label
+                for="login-senha"
+            >
+                Senha
+            </label>
 
 
-                <form
-                    id="form-login"
-                >
+            <input
+                id="login-senha"
+                type="password"
+            >
 
-                    <div
-                        class="campo-formulario"
-                    >
-
-                        <label
-                            for="login-participante"
-                        >
-
-                            Participante
-
-                        </label>
+        </div>
 
 
-                        <input
-                            type="text"
-                            id="login-participante"
-                            name="participante"
-                            autocomplete="username"
-                            required
-                        >
+        <button
+            id="btn-login"
+            type="button"
+        >
 
-                    </div>
+            Entrar
 
-
-                    <div
-                        class="campo-formulario"
-                    >
-
-                        <label
-                            for="login-senha"
-                        >
-
-                            Senha
-
-                        </label>
+        </button>
 
 
-                        <input
-                            type="password"
-                            id="login-senha"
-                            name="senha"
-                            autocomplete="current-password"
-                            required
-                        >
+        <div
+            id="login-mensagem"
+            class="mensagem"
+        >
 
-                    </div>
+        </div>
 
+    </div>
 
-                    <button
-                        type="submit"
-                        id="btn-login"
-                    >
-
-                        Entrar
-
-                    </button>
-
-
-                    <div
-                        id="login-mensagem"
-                        class="mensagem"
-                        aria-live="polite"
-                    ></div>
-
-                </form>
-
-            </div>
-
-        </section>
+</section>
 
 
         <!-- ========================================================
@@ -147,160 +132,132 @@
              ======================================================== -->
 
 
-        <section
-            id="tela-principal"
-            class="tela"
-            hidden
-        >
+       <section
+    id="tela-principal"
+    class="tela"
+    hidden
+>
+
+    <header
+        id="cabecalho-principal"
+    >
+
+        <div>
+
+            <h1>
+                Bolão Libertadores 2026
+            </h1>
 
 
-            <header
-                id="cabecalho-principal"
+            <p
+                id="usuario-logado"
             >
 
-                <div>
+            </p>
 
-                    <h1>
-                        Bolão Libertadores 2026
-                    </h1>
+        </div>
 
 
-                    <p
-                        id="usuario-logado"
-                    ></p>
+        <button
+            id="btn-logout"
+            type="button"
+        >
 
-                </div>
+            Sair
 
+        </button>
 
-                <button
-                    type="button"
-                    id="btn-logout"
-                >
-
-                    Sair
-
-                </button>
-
-            </header>
+    </header>
 
 
-            <main>
+    <main>
+
+        <nav
+            id="navegacao-principal"
+        >
+
+            <button
+                class="nav-btn ativo"
+                type="button"
+                data-tela="jogos"
+            >
+
+                Jogos
+
+            </button>
 
 
-                <!-- =================================================
-                     NAVEGAÇÃO
-                     ================================================= -->
+            <button
+                class="nav-btn"
+                type="button"
+                data-tela="ranking"
+            >
+
+                Ranking
+
+            </button>
+
+        </nav>
 
 
-                <nav
-                    id="navegacao-principal"
-                    aria-label="Navegação principal"
-                >
+        <section
+            id="secao-jogos"
+        >
 
-                    <button
-                        type="button"
-                        class="nav-btn ativo"
-                        data-tela="tela-palpites"
-                    >
+            <div
+                class="cabecalho-secao"
+            >
 
-                        Palpites
-
-                    </button>
+                <h2>
+                    Palpites dos Jogos
+                </h2>
 
 
-                    <button
-                        type="button"
-                        class="nav-btn"
-                        data-tela="tela-ranking"
-                    >
+                <p>
+                    Registre seus palpites para os jogos da Libertadores 2026.
+                </p>
 
-                        Ranking
-
-                    </button>
-
-                </nav>
+            </div>
 
 
-                <!-- =================================================
-                     SEÇÃO DE PALPITES
-                     ================================================= -->
+            <div
+                id="lista-jogos"
+            >
 
-
-                <section
-                    id="tela-palpites"
-                    class="conteudo-tela"
-                >
-
-                    <header
-                        class="cabecalho-secao"
-                    >
-
-                        <h2>
-                            Meus palpites
-                        </h2>
-
-
-                        <p>
-                            Faça seus palpites para os jogos da Libertadores 2026.
-                        </p>
-
-                    </header>
-
-
-                    <div
-                        id="lista-jogos"
-                    >
-
-                        <!-- Jogos carregados via JavaScript -->
-
-                    </div>
-
-                </section>
-
-
-                <!-- =================================================
-                     SEÇÃO DE RANKING
-                     ================================================= -->
-
-
-                <section
-                    id="tela-ranking"
-                    class="conteudo-tela"
-                    hidden
-                >
-
-                    <header
-                        class="cabecalho-secao"
-                    >
-
-                        <h2>
-                            Ranking
-                        </h2>
-
-
-                        <p>
-                            Classificação dos participantes do bolão.
-                        </p>
-
-                    </header>
-
-
-                    <div
-                        id="ranking-container"
-                    >
-
-                        <!-- Ranking carregado via JavaScript -->
-
-                    </div>
-
-                </section>
-
-
-            </main>
-
+            </div>
 
         </section>
 
+
+        <section
+            id="secao-ranking"
+            hidden
+        >
+
+            <div
+                class="cabecalho-secao"
+            >
+
+                <h2>
+                    Ranking
+                </h2>
+
+            </div>
+
+
+            <div
+                id="ranking-container"
+            >
+
+                Em breve.
+
+            </div>
+
+        </section>
+
+    </main>
+
+</section>
 
     </div>
 
