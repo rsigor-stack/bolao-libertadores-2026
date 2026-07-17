@@ -1938,7 +1938,7 @@ if (
 
         "DOMContentLoaded",
 
-        init
+        aguardarConfrontos
 
     );
 
