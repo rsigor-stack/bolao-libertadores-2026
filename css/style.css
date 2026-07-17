@@ -310,6 +310,9 @@ button:disabled {
     color: #ffffff;
 }
 
+#navegacao-principal a.nav-btn {
+    text-decoration: none;
+}
 
 /* ==========================================================================
    CABEÇALHOS DE SEÇÃO
