@@ -376,24 +376,6 @@ document.addEventListener(
             );
 
         }
-
-
-        const botaoSalvar =
-            event.target.closest(
-                ".btn-salvar-palpite"
-            );
-
-
-        if (
-            botaoSalvar
-        ) {
-
-            /* salvarPalpite(
-                botaoSalvar.dataset.jogoId */
-            );
-
-        }
-
     }
 );
 
