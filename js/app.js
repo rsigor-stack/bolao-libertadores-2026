@@ -358,6 +358,14 @@ document.addEventListener(
 
         }
 
+        if (
+            event.target.id ===
+            "btn-salvar-todos"
+        ) {
+        
+            salvarTodosPalpites();
+        
+        }
 
         if (
             event.target.id ===
@@ -1657,5 +1665,71 @@ function atualizarStatusPalpite(
 
     status.dataset.status =
         "alterado";
+
+}
+async function salvarTodosPalpites() {
+
+    console.log(
+        "Iniciando salvamento de todos os palpites."
+    );
+
+
+    const cardsAlterados =
+        document.querySelectorAll(
+            '.card-jogo[data-status="alterado"]'
+        );
+
+
+    console.log(
+        "Cards com alterações:",
+        cardsAlterados.length
+    );
+
+
+    if (
+        cardsAlterados.length === 0
+    ) {
+
+        alert(
+            "Não há palpites alterados para salvar."
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+     * ============================================================
+     * SALVA OS PALPITES UM A UM
+     * ============================================================
+     */
+
+    for (
+        const card
+        of cardsAlterados
+    ) {
+
+        const jogoId =
+            card.dataset.jogoId;
+
+
+        console.log(
+            "Salvando palpite:",
+            jogoId
+        );
+
+
+        await salvarPalpite(
+            jogoId
+        );
+
+    }
+
+
+    console.log(
+        "Processo de salvamento concluído."
+    );
 
 }
