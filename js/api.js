@@ -272,3 +272,14 @@ async function apiSalvarPalpite(
   );
 
 }
+async function apiVerificarSessao(token) {
+
+    return apiRequest(
+        "verificarSessao",
+        "GET",
+        {
+            token: token
+        }
+    );
+
+}
