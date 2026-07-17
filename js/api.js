@@ -414,3 +414,74 @@ async function apiListarJogos() {
     }
 
 }
+
+async function apiListarPalpites() {
+
+    console.log(
+        "Carregando palpites..."
+    );
+
+
+    const sessao =
+        App.sessao;
+
+
+    if (
+        !sessao ||
+        !sessao.token
+    ) {
+
+        throw new Error(
+            "Sessão não disponível."
+        );
+
+    }
+
+
+    try {
+
+        const resultado =
+            await apiRequest(
+
+                "listarPalpites",
+
+                {
+
+                    method: "GET",
+
+                    params: {
+
+                        token:
+                            sessao.token
+
+                    }
+
+                }
+
+            );
+
+
+        console.log(
+            "Resposta dos palpites:",
+            resultado
+        );
+
+
+        return resultado;
+
+    }
+    catch (
+        erro
+    ) {
+
+        console.error(
+            "Erro ao carregar palpites:",
+            erro
+        );
+
+
+        throw erro;
+
+    }
+
+}
