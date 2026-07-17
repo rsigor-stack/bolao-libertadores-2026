@@ -150,32 +150,40 @@ async function apiRequest(
  */
 
 async function apiLogin(
-  participante,
-  senha
+    participante,
+    senha
 ) {
 
-  return apiRequest(
+    console.log(
+        "Enviando login:",
+        {
+            participante,
+            senha
+        }
+    );
 
-    "login",
 
-    {
+    return apiRequest(
 
-      method: "POST",
+        "login",
 
-      body: {
+        {
 
-        participante,
+            method: "POST",
 
-        senha
+            body: {
 
-      }
+                participante,
 
-    }
+                senha
 
-  );
+            }
+
+        }
+
+    );
 
 }
-
 
 /**
  * ============================================================================
