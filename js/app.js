@@ -722,10 +722,11 @@ async function carregarDadosAplicacao() {
          * ============================================================
          */
 
-        renderizarJogos(
-            App.jogos
-        );
-
+        /* renderizarJogos(
+        //    App.jogos
+        // );
+        */
+        renderizarConfrontosOitavas();
 
     }
 
@@ -790,375 +791,389 @@ function renderizarJogos(
             jogo
         ) {
 
-
-            console.log(
-                "Processando jogo:",
-                jogo.jogoId
-            );
-
-
-            /*
-             * ========================================================
-             * LOCALIZA PALPITE EXISTENTE
-             * ========================================================
-             */
-
-            const palpite =
-                App.palpites.find(
-                    function(
-                        item
-                    ) {
-
-                        return (
-
-                            item.referenciaId ===
-                            jogo.jogoId ||
-
-                            item.referenciaID ===
-                            jogo.jogoId ||
-
-                            item.ReferenciaID ===
-                            jogo.jogoId
-
-                        );
-
-                    }
-                );
-
-
-            console.log(
-                "Palpite encontrado para",
-                jogo.jogoId,
-                ":",
-                palpite
-            );
-
-
-            /*
-             * ========================================================
-             * VALORES INICIAIS
-             * ========================================================
-             */
-
-            const golsMandante =
-                palpite
-                    ? palpite.GolsMandante
-                    : "";
-
-
-            const golsVisitante =
-                palpite
-                    ? palpite.GolsVisitante
-                    : "";
-
-
-            /*
-             * ========================================================
-             * STATUS INICIAL
-             * ========================================================
-             */
-
-            const statusInicial =
-                palpite
-                    ? "salvo"
-                    : "vazio";
-
-
-            const textoStatusInicial =
-                palpite
-                    ? "Palpite salvo"
-                    : "Palpite não informado";
-
-
-            /*
-             * ========================================================
-             * CRIA CARD
-             * ========================================================
-             */
-
             const card =
-                document.createElement(
-                    "article"
+                criarCardJogo(
+                    jogo
                 );
-
-
-            card.className =
-                "card-jogo";
-
-
-            card.dataset.jogoId =
-                jogo.jogoId;
-
-
-            card.innerHTML = `
-
-                <div
-                    class="card-jogo-cabecalho"
-                >
-
-                    <span>
-                        Jogo ${jogo.jogoNumero}
-                    </span>
-
-
-                    <span>
-                        ${jogo.data}
-                        •
-                        ${jogo.hora}
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="card-jogo-confronto"
-                >
-
-                    <div
-                        class="time"
-                    >
-
-                        <span>
-                            ${jogo.mandante}
-                        </span>
-
-
-                        <input
-
-                            type="number"
-
-                            min="0"
-
-                            max="20"
-
-                            class="input-gols"
-
-                            data-campo="mandante"
-
-                            value="${golsMandante}"
-
-                        >
-
-                    </div>
-
-
-                    <div
-                        class="time"
-                    >
-
-                        <span>
-                            ${jogo.visitante}
-                        </span>
-
-
-                        <input
-
-                            type="number"
-
-                            min="0"
-
-                            max="20"
-
-                            class="input-gols"
-
-                            data-campo="visitante"
-
-                            value="${golsVisitante}"
-
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    class="status-palpite"
-                    data-status="${statusInicial}"
-                >
-
-                    ${textoStatusInicial}
-
-                </div>
-
-
-                <button
-
-                    class="btn-salvar-palpite"
-
-                    data-jogo-id="${jogo.jogoId}"
-
-                >
-
-                    Salvar palpite
-
-                </button>
-
-            `;
 
 
             container.appendChild(
                 card
             );
 
+        }
+    );
 
-            /*
-             * ========================================================
-             * LOCALIZA ELEMENTOS DO CARD
-             * ========================================================
-             */
+}
 
-            const inputMandante =
-                card.querySelector(
-                    '[data-campo="mandante"]'
+function criarCardJogo(
+    jogo
+) {
+
+
+    console.log(
+        "Processando jogo:",
+        jogo.jogoId
+    );
+
+
+    /*
+     * ========================================================
+     * LOCALIZA PALPITE EXISTENTE
+     * ========================================================
+     */
+
+    const palpite =
+        App.palpites.find(
+            function(
+                item
+            ) {
+
+                return (
+
+                    item.referenciaId ===
+                    jogo.jogoId ||
+
+                    item.referenciaID ===
+                    jogo.jogoId ||
+
+                    item.ReferenciaID ===
+                    jogo.jogoId
+
                 );
-
-
-            const inputVisitante =
-                card.querySelector(
-                    '[data-campo="visitante"]'
-                );
-
-
-            const status =
-                card.querySelector(
-                    ".status-palpite"
-                );
-
-
-            const botaoSalvar =
-                card.querySelector(
-                    ".btn-salvar-palpite"
-                );
-
-
-            /*
-             * ========================================================
-             * ATUALIZA STATUS APÓS ALTERAÇÃO
-             * ========================================================
-             */
-
-            function atualizarStatus() {
-
-
-                const valorMandante =
-                    inputMandante.value;
-
-
-                const valorVisitante =
-                    inputVisitante.value;
-
-
-                /*
-                 * PALPITE NÃO INFORMADO
-                 */
-
-                if (
-
-                    valorMandante === "" &&
-
-                    valorVisitante === ""
-
-                ) {
-
-                    status.textContent =
-                        "Palpite não informado";
-
-
-                    status.dataset.status =
-                        "vazio";
-
-
-                    return;
-
-                }
-
-
-                /*
-                 * PLACAR INCOMPLETO
-                 */
-
-                if (
-
-                    valorMandante === "" ||
-
-                    valorVisitante === ""
-
-                ) {
-
-                    status.textContent =
-                        "Placar incompleto";
-
-
-                    status.dataset.status =
-                        "alterado";
-
-
-                    return;
-
-                }
-
-
-                /*
-                 * ALTERAÇÕES NÃO SALVAS
-                 */
-
-                status.textContent =
-                    "Alterações não salvas";
-
-
-                status.dataset.status =
-                    "alterado";
 
             }
+        );
 
 
-            /*
-             * ========================================================
-             * EVENTOS DOS CAMPOS
-             * ========================================================
-             */
+    console.log(
+        "Palpite encontrado para",
+        jogo.jogoId,
+        ":",
+        palpite
+    );
 
-            inputMandante.addEventListener(
-                "input",
-                atualizarStatus
+
+    /*
+     * ========================================================
+     * VALORES INICIAIS
+     * ========================================================
+     */
+
+    const golsMandante =
+        palpite
+            ? palpite.GolsMandante
+            : "";
+
+
+    const golsVisitante =
+        palpite
+            ? palpite.GolsVisitante
+            : "";
+
+
+    /*
+     * ========================================================
+     * STATUS INICIAL
+     * ========================================================
+     */
+
+    const statusInicial =
+        palpite
+            ? "salvo"
+            : "vazio";
+
+
+    const textoStatusInicial =
+        palpite
+            ? "Palpite salvo"
+            : "Palpite não informado";
+
+
+    /*
+     * ========================================================
+     * CRIA CARD
+     * ========================================================
+     */
+
+    const card =
+        document.createElement(
+            "article"
+        );
+
+
+    card.className =
+        "card-jogo";
+
+
+    card.dataset.jogoId =
+        jogo.jogoId;
+
+
+    card.innerHTML = `
+
+        <div
+            class="card-jogo-cabecalho"
+        >
+
+            <span>
+                Jogo ${jogo.jogoNumero}
+            </span>
+
+
+            <span>
+                ${jogo.data}
+                •
+                ${jogo.hora}
+            </span>
+
+        </div>
+
+
+        <div
+            class="card-jogo-confronto"
+        >
+
+            <div
+                class="time"
+            >
+
+                <span>
+                    ${jogo.mandante}
+                </span>
+
+
+                <input
+
+                    type="number"
+
+                    min="0"
+
+                    max="20"
+
+                    class="input-gols"
+
+                    data-campo="mandante"
+
+                    value="${golsMandante ?? ""}"
+
+                >
+
+            </div>
+
+
+            <div
+                class="time"
+            >
+
+                <span>
+                    ${jogo.visitante}
+                </span>
+
+
+                <input
+
+                    type="number"
+
+                    min="0"
+
+                    max="20"
+
+                    class="input-gols"
+
+                    data-campo="visitante"
+
+                    value="${golsVisitante ?? ""}"
+
+                >
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="status-palpite"
+            data-status="${statusInicial}"
+        >
+
+            ${textoStatusInicial}
+
+        </div>
+
+
+        <button
+
+            class="btn-salvar-palpite"
+
+            data-jogo-id="${jogo.jogoId}"
+
+        >
+
+            Salvar palpite
+
+        </button>
+
+    `;
+
+
+    /*
+     * ========================================================
+     * LOCALIZA ELEMENTOS
+     * ========================================================
+     */
+
+    const inputMandante =
+        card.querySelector(
+            '[data-campo="mandante"]'
+        );
+
+
+    const inputVisitante =
+        card.querySelector(
+            '[data-campo="visitante"]'
+        );
+
+
+    const status =
+        card.querySelector(
+            ".status-palpite"
+        );
+
+
+    const botaoSalvar =
+        card.querySelector(
+            ".btn-salvar-palpite"
+        );
+
+
+    /*
+     * ========================================================
+     * ATUALIZA STATUS
+     * ========================================================
+     */
+
+    function atualizarStatus() {
+
+
+        const valorMandante =
+            inputMandante.value;
+
+
+        const valorVisitante =
+            inputVisitante.value;
+
+
+        /*
+         * PALPITE NÃO INFORMADO
+         */
+
+        if (
+
+            valorMandante === "" &&
+
+            valorVisitante === ""
+
+        ) {
+
+            status.textContent =
+                "Palpite não informado";
+
+
+            status.dataset.status =
+                "vazio";
+
+
+            return;
+
+        }
+
+
+        /*
+         * PLACAR INCOMPLETO
+         */
+
+        if (
+
+            valorMandante === "" ||
+
+            valorVisitante === ""
+
+        ) {
+
+            status.textContent =
+                "Placar incompleto";
+
+
+            status.dataset.status =
+                "alterado";
+
+
+            return;
+
+        }
+
+
+        /*
+         * ALTERAÇÕES NÃO SALVAS
+         */
+
+        status.textContent =
+            "Alterações não salvas";
+
+
+        status.dataset.status =
+            "alterado";
+
+    }
+
+
+    /*
+     * ========================================================
+     * EVENTOS DOS CAMPOS
+     * ========================================================
+     */
+
+    inputMandante.addEventListener(
+        "input",
+        atualizarStatus
+    );
+
+
+    inputVisitante.addEventListener(
+        "input",
+        atualizarStatus
+    );
+
+
+    /*
+     * ========================================================
+     * EVENTO DO BOTÃO
+     * ======================================================== */
+
+    botaoSalvar.addEventListener(
+        "click",
+        function() {
+
+
+            console.log(
+                "Clique detectado no botão:",
+                jogo.jogoId
             );
 
 
-            inputVisitante.addEventListener(
-                "input",
-                atualizarStatus
-            );
-
-
-            /*
-             * ========================================================
-             * EVENTO DO BOTÃO
-             * ========================================================
-             */
-
-            botaoSalvar.addEventListener(
-                "click",
-                function() {
-
-
-                    console.log(
-                        "Clique detectado no botão:",
-                        jogo.jogoId
-                    );
-
-
-                    salvarPalpite(
-                        jogo.jogoId
-                    );
-
-                }
+            salvarPalpite(
+                jogo.jogoId
             );
 
         }
     );
 
+
+    return card;
+
 }
+
 async function salvarPalpite(
     jogoId,
     mostrarMensagem = true
@@ -1982,5 +1997,261 @@ async function salvarTodosPalpites() {
         );
 
     }
+
+}
+
+function renderizarConfrontosOitavas() {
+
+
+    const container =
+        document.getElementById(
+            "lista-jogos"
+        );
+
+
+    if (
+        !container
+    ) {
+
+        console.error(
+            "Container lista-jogos não encontrado."
+        );
+
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    const confrontos =
+        App.confrontos
+            .filter(
+                function(
+                    confronto
+                ) {
+
+                    return (
+
+                        confronto.Fase ===
+                        "OITAVAS"
+
+                    );
+
+                }
+            )
+            .sort(
+                function(
+                    a,
+                    b
+                ) {
+
+                    return (
+
+                        Number(
+                            a.Ordem
+                        )
+
+                        -
+
+                        Number(
+                            b.Ordem
+                        )
+
+                    );
+
+                }
+            );
+
+
+    if (
+        confrontos.length === 0
+    ) {
+
+        container.innerHTML =
+            "<p>Nenhum confronto encontrado.</p>";
+
+
+        return;
+
+    }
+
+
+    confrontos.forEach(
+        function(
+            confronto
+        ) {
+
+
+            /*
+             * ====================================================
+             * LOCALIZA JOGOS DO CONFRONTO
+             * ====================================================
+             */
+
+            const jogos =
+                App.jogos
+                    .filter(
+                        function(
+                            jogo
+                        ) {
+
+                            return (
+
+                                jogo.confrontoId ===
+                                confronto.ConfrontoID
+
+                            );
+
+                        }
+                    )
+                    .sort(
+                        function(
+                            a,
+                            b
+                        ) {
+
+                            return (
+
+                                Number(
+                                    a.jogoNumero
+                                )
+
+                                -
+
+                                Number(
+                                    b.jogoNumero
+                                )
+
+                            );
+
+                        }
+                    );
+
+
+            /*
+             * ====================================================
+             * CRIA CARD DO CONFRONTO
+             * ====================================================
+             */
+
+            const cardConfronto =
+                document.createElement(
+                    "article"
+                );
+
+
+            cardConfronto.className =
+                "card-confronto";
+
+
+            cardConfronto.dataset.confrontoId =
+                confronto.ConfrontoID;
+
+
+            cardConfronto.innerHTML = `
+
+                <div
+                    class="card-confronto-cabecalho"
+                >
+
+                    <strong>
+                        ${confronto.ConfrontoID}
+                    </strong>
+
+
+                    <span>
+                        Oitavas de Final
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="card-confronto-times"
+                >
+
+                    <span>
+                        ${confronto.TimeA}
+                    </span>
+
+
+                    <strong>
+                        ×
+                    </strong>
+
+
+                    <span>
+                        ${confronto.TimeB}
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="jogos-confronto"
+                >
+
+                </div>
+
+
+                <div
+                    class="classificado-confronto"
+                >
+
+                    <span>
+                        Classificado:
+                    </span>
+
+
+                    <strong>
+                        A definir
+                    </strong>
+
+                </div>
+
+            `;
+
+
+            const containerJogos =
+                cardConfronto.querySelector(
+                    ".jogos-confronto"
+                );
+
+
+            /*
+             * ====================================================
+             * INSERE OS DOIS JOGOS
+             * ====================================================
+             */
+
+            jogos.forEach(
+                function(
+                    jogo
+                ) {
+
+                    const cardJogo =
+                        criarCardJogo(
+                            jogo
+                        );
+
+
+                    containerJogos.appendChild(
+                        cardJogo
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                cardConfronto
+            );
+
+        }
+    );
 
 }
