@@ -1674,9 +1674,34 @@ async function salvarTodosPalpites() {
     );
 
 
-    const cardsAlterados =
+    const todosOsCards =
         document.querySelectorAll(
-            '.card-jogo[data-status="alterado"]'
+            ".card-jogo"
+        );
+
+
+    const cardsAlterados =
+        Array.from(
+            todosOsCards
+        )
+        .filter(
+            function(card) {
+
+                const status =
+                    card.querySelector(
+                        ".status-palpite"
+                    );
+
+
+                return (
+
+                    status &&
+                    status.dataset.status ===
+                    "alterado"
+
+                );
+
+            }
         );
 
 
@@ -1699,12 +1724,6 @@ async function salvarTodosPalpites() {
 
     }
 
-
-    /*
-     * ============================================================
-     * SALVA OS PALPITES UM A UM
-     * ============================================================
-     */
 
     for (
         const card
