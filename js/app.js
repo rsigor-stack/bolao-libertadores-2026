@@ -827,17 +827,24 @@ function renderizarJogos(
         ];
 
 
-    confrontos.forEach(
-        function(
-            confrontoId
-        ) {
-
-            atualizarClassificadoDoConfronto(
-                confrontoId
-            );
-
-        }
-    );
+        setTimeout(
+            function() {
+        
+                confrontos.forEach(
+                    function(
+                        confrontoId
+                    ) {
+        
+                        atualizarClassificadoDoConfronto(
+                            confrontoId
+                        );
+        
+                    }
+                );
+        
+            },
+            0
+        );
 
 }
 
