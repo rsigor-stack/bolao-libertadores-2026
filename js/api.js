@@ -154,20 +154,13 @@ async function apiLogin(
     senha
 ) {
 
-
-    Logger.log(
-    "PARAMETROS RECEBIDOS:"
-  );
-
-  Logger.log(
-    JSON.stringify(
-      e.parameter
-    )
-  );
-
-  
     console.log(
-        "Enviando login:",
+        "1. Iniciando login"
+    );
+
+
+    console.log(
+        "2. Dados enviados:",
         {
             participante,
             senha
@@ -175,25 +168,50 @@ async function apiLogin(
     );
 
 
-    return apiRequest(
+    try {
 
-        "login",
+        const resultado =
+            await apiRequest(
 
-        {
+                "login",
 
-            method: "POST",
+                {
 
-            body: {
+                    method: "POST",
 
-                participante,
+                    body: {
 
-                senha
+                        participante,
+                        senha
 
-            }
+                    }
 
-        }
+                }
 
-    );
+            );
+
+
+        console.log(
+            "3. Resposta da API:",
+            resultado
+        );
+
+
+        return resultado;
+
+
+    }
+    catch (erro) {
+
+        console.error(
+            "4. Erro real:",
+            erro
+        );
+
+
+        throw erro;
+
+    }
 
 }
 
