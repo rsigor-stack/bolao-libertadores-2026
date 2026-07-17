@@ -372,13 +372,12 @@ function carregarPalpitesExistentes() {
 
             }
 
-        console.log(
-            "Scores depois:",
-            structuredClone(state.scores)
         );
             
         });
-
+        console.log(
+            "Scores depois:",
+            structuredClone(state.scores)
 }
 
 // ============================================================================
