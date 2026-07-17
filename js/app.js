@@ -909,6 +909,8 @@ function criarCardJogo(
     card.dataset.jogoId =
         jogo.jogoId;
 
+    card.dataset.confrontoId =
+        jogo.confrontoId;
 
     card.innerHTML = `
 
@@ -2697,7 +2699,7 @@ function atualizarClassificadoDoConfronto(
 
     const cardConfronto =
         document.querySelector(
-            `.card-confronto[data-confronto-id="${confrontoId}"]`
+            `.card-jogo[data-confronto-id="${confrontoId}"]`
         );
 
 
