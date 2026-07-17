@@ -1065,4 +1065,65 @@ async function salvarPalpite(
         dados
     );
 
+    try {
+    
+        const resposta =
+            await apiSalvarPalpite(
+                dados
+            );
+    
+    
+        if (
+            !resposta ||
+            !resposta.success
+        ) {
+    
+            console.error(
+                "Falha ao salvar palpite:",
+                resposta
+            );
+    
+    
+            alert(
+    
+                resposta?.message ||
+    
+                "Não foi possível salvar o palpite."
+    
+            );
+    
+    
+            return;
+    
+        }
+    
+    
+        console.log(
+            "Palpite salvo com sucesso:",
+            resposta
+        );
+    
+    
+        alert(
+            "Palpite salvo com sucesso."
+        );
+    
+    
+    }
+    catch (
+        erro
+    ) {
+    
+        console.error(
+            "Erro ao salvar palpite:",
+            erro
+        );
+    
+    
+        alert(
+            "Não foi possível salvar o palpite."
+        );
+    
+    }
+
 }
