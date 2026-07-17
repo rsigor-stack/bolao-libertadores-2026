@@ -42,13 +42,7 @@ document.addEventListener(
     "DOMContentLoaded",
     async function () {
 
-        console.log(
-            "Aplicação iniciada."
-        );
-
-
         await restaurarSessao();
-
 
         document.body.classList.remove(
             "app-inicializando"
@@ -59,14 +53,7 @@ document.addEventListener(
 
 
 function iniciarAplicacao() {
-
-    console.log(
-        "Aplicação iniciada."
-    );
-
-
     mostrarTelaLogin();
-
 }
 
 /**
@@ -238,32 +225,13 @@ async function realizarLogin() {
 
         );
 
-
-        console.log(
-
-            "Sessão salva:",
-
-            sessao
-
-        );
-
-
         App.sessao =
             resposta.data;
 
         App.sessao =
-    resposta.data;
+            resposta.data;
 
-    atualizarTitulos();
-
-        console.log(
-
-            "Login realizado:",
-
-            App.sessao
-
-        );
-
+        atualizarTitulos();
 
         mostrarTelaPrincipal();
 
@@ -302,11 +270,6 @@ async function realizarLogin() {
 
 function realizarLogout() {
 
-    console.log(
-        "Encerrando sessão..."
-    );
-
-
     App.sessao =
         null;
 
@@ -335,11 +298,6 @@ function realizarLogout() {
 
     }
 
-
-    console.log(
-        "Sessão encerrada."
-    );
-
 }
 /**
  * ============================================================================
@@ -350,11 +308,6 @@ function realizarLogout() {
 document.addEventListener(
     "click",
     function(event) {
-
-        console.log(
-            "Clique detectado:",
-            event.target
-        );
         
         if (
             event.target.id ===
@@ -572,11 +525,6 @@ async function restaurarSessao() {
         App.sessao =
             resposta.data;
 
-        console.log(
-            "Sessão validada e restaurada:",
-            App.sessao
-        );
-
         atualizarTitulos();
 
         await carregarDadosAplicacao();
@@ -599,11 +547,6 @@ async function restaurarSessao() {
 }
 
 async function carregarDadosAplicacao() {
-
-    console.log(
-        "Carregando dados da aplicação..."
-    );
-
 
     try {
 
@@ -637,13 +580,6 @@ async function carregarDadosAplicacao() {
         App.jogos =
             respostaJogos.data;
 
-
-        console.log(
-            "Jogos carregados:",
-            App.jogos
-        );
-
-
         /*
          * ============================================================
          * CARREGA CONFRONTOS
@@ -673,13 +609,6 @@ async function carregarDadosAplicacao() {
         App.confrontos =
             respostaConfrontos.data;
 
-
-        console.log(
-            "Confrontos carregados:",
-            App.confrontos
-        );
-
-
         /*
          * ============================================================
          * CARREGA PALPITES
@@ -708,13 +637,6 @@ async function carregarDadosAplicacao() {
 
         App.palpites =
             respostaPalpites.data;
-
-
-        console.log(
-            "Palpites carregados:",
-            App.palpites
-        );
-
 
         /*
          * ============================================================
@@ -832,13 +754,6 @@ function criarCardJogo(
     jogo
 ) {
 
-
-    console.log(
-        "Processando jogo:",
-        jogo.jogoId
-    );
-
-
     /*
      * ========================================================
      * LOCALIZA PALPITE EXISTENTE
@@ -866,15 +781,6 @@ function criarCardJogo(
 
             }
         );
-
-
-    console.log(
-        "Palpite encontrado para",
-        jogo.jogoId,
-        ":",
-        palpite
-    );
-
 
     /*
      * ========================================================
@@ -1194,14 +1100,6 @@ function criarCardJogo(
     botaoSalvar.addEventListener(
         "click",
         function() {
-
-
-            console.log(
-                "Clique detectado no botão:",
-                jogo.jogoId
-            );
-
-
             salvarPalpite(
                 jogo.jogoId
             );
@@ -1217,12 +1115,6 @@ async function salvarPalpite(
     jogoId,
     mostrarMensagem = true
 ) {
-
-    console.log(
-        "Iniciando salvamento:",
-        jogoId
-    );
-
 
     const card =
         document.querySelector(
@@ -1248,15 +1140,7 @@ async function salvarPalpite(
         botao &&
         botao.disabled
     ) {
-
-        console.log(
-            "Salvamento já em andamento:",
-            jogoId
-        );
-
-
         return;
-
     }
 
 
@@ -1419,13 +1303,6 @@ async function salvarPalpite(
 
         };
 
-
-        console.log(
-            "Dados do palpite:",
-            dados
-        );
-
-
         /*
          * ========================================================
          * ENVIA PARA API
@@ -1482,11 +1359,6 @@ const cardAtualizado =
     );
 
 
-console.log(
-    "Card localizado após salvamento:",
-    cardAtualizado
-);
-
 
 if (
     !cardAtualizado
@@ -1506,14 +1378,7 @@ const status =
             ".status-palpite"
         )
         : null;
-
-
-        console.log(
-            "Status localizado:",
-            status
-        );
-        
-        
+         
         if (
             !status
         ) {
@@ -1536,13 +1401,7 @@ const status =
         
             status.dataset.status =
                 "salvo";
-        
-        
-            console.log(
-                "Status atualizado com sucesso:",
-                jogoId
-            );
-        
+       
         }  
 
 
@@ -1551,17 +1410,6 @@ const status =
  * SUCESSO
  * ============================================================
  */
-        console.log(
-            "Palpite salvo com sucesso:",
-            resposta
-        );
-
-
-        console.log(
-            "Palpite salvo com sucesso:",
-            resposta
-        );
-        
         
         if (
             mostrarMensagem
@@ -1813,12 +1661,6 @@ function atualizarStatusPalpite(
 
 }
 async function salvarTodosPalpites() {
-
-    console.log(
-        "Iniciando salvamento de todos os palpites."
-    );
-
-
     const todosOsCards =
         document.querySelectorAll(
             ".card-jogo"
@@ -1848,12 +1690,6 @@ async function salvarTodosPalpites() {
 
             }
         );
-
-
-    console.log(
-        "Cards com alterações:",
-        cardsAlterados.length
-    );
 
 
     if (
@@ -1915,13 +1751,6 @@ async function salvarTodosPalpites() {
 
             }
         );
-
-
-    console.log(
-        "Palpites enviados em lote:",
-        palpites
-    );
-
 
     try {
 
@@ -2010,12 +1839,6 @@ async function salvarTodosPalpites() {
 
                 : `${quantidade} palpites salvos com sucesso.`
 
-        );
-
-
-        console.log(
-            "Processo de salvamento em lote concluído:",
-            resposta
         );
 
     }
