@@ -711,6 +711,36 @@ function renderizarJogos(
             jogo
         ) {
 
+
+            const palpite =
+                App.palpites.find(
+                    function(
+                        item
+                    ) {
+
+                        return (
+
+                            item.referenciaId ===
+                            jogo.jogoId
+
+                        );
+
+                    }
+                );
+
+
+            const golsMandante =
+                palpite
+                    ? palpite.golsMandante
+                    : "";
+
+
+            const golsVisitante =
+                palpite
+                    ? palpite.golsVisitante
+                    : "";
+
+
             const card =
                 document.createElement(
                     "article"
@@ -735,6 +765,7 @@ function renderizarJogos(
                         Jogo ${jogo.jogoNumero}
                     </span>
 
+
                     <span>
                         ${jogo.data}
                         •
@@ -756,6 +787,23 @@ function renderizarJogos(
                             ${jogo.mandante}
                         </span>
 
+
+                        <input
+
+                            type="number"
+
+                            min="0"
+
+                            max="20"
+
+                            class="input-gols"
+
+                            data-campo="mandante"
+
+                            value="${golsMandante}"
+
+                        >
+
                     </div>
 
 
@@ -767,9 +815,39 @@ function renderizarJogos(
                             ${jogo.visitante}
                         </span>
 
+
+                        <input
+
+                            type="number"
+
+                            min="0"
+
+                            max="20"
+
+                            class="input-gols"
+
+                            data-campo="visitante"
+
+                            value="${golsVisitante}"
+
+                        >
+
                     </div>
 
                 </div>
+
+
+                <button
+
+                    class="btn-salvar-palpite"
+
+                    data-jogo-id="${jogo.jogoId}"
+
+                >
+
+                    Salvar palpite
+
+                </button>
 
             `;
 
@@ -777,6 +855,71 @@ function renderizarJogos(
             container.appendChild(
                 card
             );
+
+        }
+    );
+
+}
+function salvarPalpite(
+    jogoId
+) {
+
+    const card =
+        document.querySelector(
+
+            `.card-jogo[data-jogo-id="${jogoId}"]`
+
+        );
+
+
+    if (
+        !card
+    ) {
+
+        console.error(
+            "Card do jogo não encontrado:",
+            jogoId
+        );
+
+
+        return;
+
+    }
+
+
+    const inputMandante =
+        card.querySelector(
+
+            '[data-campo="mandante"]'
+
+        );
+
+
+    const inputVisitante =
+        card.querySelector(
+
+            '[data-campo="visitante"]'
+
+        );
+
+
+    const golsMandante =
+        inputMandante.value;
+
+
+    const golsVisitante =
+        inputVisitante.value;
+
+
+    console.log(
+        "Salvando palpite:",
+        {
+
+            jogoId,
+
+            golsMandante,
+
+            golsVisitante
 
         }
     );
