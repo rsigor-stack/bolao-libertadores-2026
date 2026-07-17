@@ -102,7 +102,41 @@ function obterOitavas() {
 
 }
 
-const OITAVAS = obterOitavas();
+let OITAVAS = [];
+
+function inicializarConfrontos() {
+
+    const confrontos = obterOitavas();
+
+    if (!confrontos.length) {
+
+        console.warn(
+            "Confrontos ainda não disponíveis."
+        );
+
+        return false;
+
+    }
+
+    OITAVAS = confrontos;
+
+    return true;
+
+}
+
+console.log(
+    "App.confrontos ao iniciar:",
+    App?.confrontos
+);
+
+console.log(
+    "Quantidade de oitavas:",
+    App?.confrontos
+        ?.filter(c => c.Fase === "OITAVAS")
+        .length
+);
+
+inicializarConfrontos();
 
 function adaptarConfronto(confronto) {
 
