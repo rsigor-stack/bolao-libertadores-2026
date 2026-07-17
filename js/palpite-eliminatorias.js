@@ -116,6 +116,8 @@ function inicializarConfrontos() {
 
     OITAVAS = confrontos;
 
+    scores = criarScoresIniciais();
+
     return true;
 
 }
