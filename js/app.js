@@ -29,24 +29,14 @@ const App = {
 
 document.addEventListener(
     "DOMContentLoaded",
-    function () {
+    async function () {
 
         console.log(
             "Aplicação iniciada."
         );
 
 
-        const sessaoRestaurada =
-            restaurarSessao();
-
-
-        if (
-            sessaoRestaurada
-        ) {
-
-            mostrarTelaPrincipal();
-
-        }
+        await restaurarSessao();
 
 
         document.body.classList.remove(
@@ -295,29 +285,44 @@ async function realizarLogin() {
 
 function realizarLogout() {
 
+    console.log(
+        "Encerrando sessão..."
+    );
+
+
     App.sessao =
         null;
+
+
+    localStorage.removeItem(
+        "bolao_libertadores_session"
+    );
 
 
     mostrarTelaLogin();
 
 
     const senha =
-        document
-            .getElementById(
-                "login-senha"
-            );
+        document.getElementById(
+            "login-senha"
+        );
 
 
-    if (senha) {
+    if (
+        senha
+    ) {
 
         senha.value =
             "";
 
     }
 
-}
 
+    console.log(
+        "Sessão encerrada."
+    );
+
+}
 /**
  * ============================================================================
  * EVENTOS DA INTERFACE
@@ -484,45 +489,7 @@ function obterSessao() {
     }
 
 }
-function encerrarSessao() {
 
-    localStorage.removeItem(
-        "bolao_libertadores_session"
-    );
-
-
-    window.location.reload();
-
-}
-function restaurarSessao() {
-
-    const sessao =
-        obterSessao();
-
-
-    if (
-        !sessao ||
-        !sessao.token
-    ) {
-
-        return false;
-
-    }
-
-
-    App.sessao =
-        sessao;
-
-
-    console.log(
-        "Sessão restaurada:",
-        App.sessao
-    );
-
-
-    return true;
-
-}
 async function restaurarSessao() {
 
     const sessaoSalva =
