@@ -32,7 +32,9 @@ async function apiRequest(
     let url =
         API_URL +
         "?action=" +
-        encodeURIComponent(action);
+        encodeURIComponent(
+            action
+        );
 
 
     const config = {
@@ -42,45 +44,23 @@ async function apiRequest(
     };
 
 
-    /*
-     * GET
-     */
-
-    if (
-        method === "GET"
-    ) {
-
-        if (body) {
-
-            Object.entries(
-                body
-            ).forEach(
-                function([
-                    chave,
-                    valor
-                ]) {
-
-                    url +=
-                        "&" +
-                        encodeURIComponent(
-                            chave
-                        ) +
-                        "=" +
-                        encodeURIComponent(
-                            valor
-                        );
-
-                }
-            );
-
-        }
-
-    }
+    console.log(
+        "URL:",
+        url
+    );
 
 
-    /*
-     * POST
-     */
+    console.log(
+        "Método:",
+        method
+    );
+
+
+    console.log(
+        "Body original:",
+        body
+    );
+
 
     if (
         method === "POST"
@@ -94,55 +74,56 @@ async function apiRequest(
     }
 
 
-    const response =
-        await fetch(
-            url,
-            config
-        );
-
-
-    if (
-        !response.ok
-    ) {
-
-        throw new Error(
-
-            "Erro HTTP " +
-            response.status
-
-        );
-
-    }
-
-
-    const texto =
-        await response.text();
-
-
     console.log(
-        "Resposta recebida:",
-        texto
+        "Body enviado:",
+        config.body
     );
 
 
     try {
 
+        const response =
+            await fetch(
+                url,
+                config
+            );
+
+
+        console.log(
+            "Resposta HTTP:",
+            response.status
+        );
+
+
+        const texto =
+            await response.text();
+
+
+        console.log(
+            "Texto recebido:",
+            texto
+        );
+
+
         return JSON.parse(
             texto
         );
 
+
     }
     catch (erro) {
 
-        throw new Error(
-            "Resposta inválida da API."
+        console.error(
+            "Erro dentro de apiRequest:",
+            erro
         );
+
+
+        throw erro;
 
     }
 
 }
-
-
 /**
  * ============================================================================
  * LOGIN
