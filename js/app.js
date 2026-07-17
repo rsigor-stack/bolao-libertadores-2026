@@ -18,6 +18,8 @@ const App = {
 
     jogos: [],
 
+    palpites: [],
+
     telaAtual: "login"
 
 };
@@ -583,18 +585,18 @@ async function carregarDadosAplicacao() {
 
     try {
 
-        const resposta =
+        const respostaJogos =
             await apiListarJogos();
 
 
         if (
-            !resposta ||
-            !resposta.success
+            !respostaJogos ||
+            !respostaJogos.success
         ) {
 
             console.error(
                 "Falha ao carregar jogos:",
-                resposta
+                respostaJogos
             );
 
 
@@ -604,12 +606,42 @@ async function carregarDadosAplicacao() {
 
 
         App.jogos =
-            resposta.data;
+            respostaJogos.data;
 
 
         console.log(
             "Jogos carregados:",
             App.jogos
+        );
+
+
+        const respostaPalpites =
+            await apiListarPalpites();
+
+
+        if (
+            !respostaPalpites ||
+            !respostaPalpites.success
+        ) {
+
+            console.error(
+                "Falha ao carregar palpites:",
+                respostaPalpites
+            );
+
+
+            return;
+
+        }
+
+
+        App.palpites =
+            respostaPalpites.data;
+
+
+        console.log(
+            "Palpites carregados:",
+        App.palpites
         );
 
 
