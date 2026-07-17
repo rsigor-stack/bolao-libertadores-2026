@@ -16,6 +16,8 @@ const App = {
 
     sessao: null,
 
+    jogos: [],
+
     telaAtual: "login"
 
 };
@@ -251,6 +253,8 @@ async function realizarLogin() {
 
 
         mostrarTelaPrincipal();
+
+        await carregarDadosAplicacao();
 
 
     }
@@ -543,9 +547,15 @@ async function restaurarSessao() {
         App.sessao =
             resposta.data;
 
+        console.log(
+            "Sessão validada e restaurada:",
+            App.sessao
+        );
+
 
         mostrarTelaPrincipal();
 
+        await carregarDadosAplicacao();
 
     }
     catch (
@@ -561,5 +571,182 @@ async function restaurarSessao() {
         mostrarTelaLogin();
 
     }
+
+}
+
+async function carregarDadosAplicacao() {
+
+    console.log(
+        "Carregando dados da aplicação..."
+    );
+
+
+    try {
+
+        const resposta =
+            await apiListarJogos();
+
+
+        if (
+            !resposta ||
+            !resposta.success
+        ) {
+
+            console.error(
+                "Falha ao carregar jogos:",
+                resposta
+            );
+
+
+            return;
+
+        }
+
+
+        App.jogos =
+            resposta.data;
+
+
+        console.log(
+            "Jogos carregados:",
+            App.jogos
+        );
+
+
+        renderizarJogos(
+            App.jogos
+        );
+
+
+    }
+    catch (
+        erro
+    ) {
+
+        console.error(
+            "Erro ao carregar dados:",
+            erro
+        );
+
+    }
+
+}
+
+function renderizarJogos(
+    jogos
+) {
+
+    const container =
+        document.getElementById(
+            "lista-jogos"
+        );
+
+
+    if (
+        !container
+    ) {
+
+        console.error(
+            "Container lista-jogos não encontrado."
+        );
+
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    if (
+        !jogos ||
+        jogos.length === 0
+    ) {
+
+        container.innerHTML =
+            "<p>Nenhum jogo encontrado.</p>";
+
+
+        return;
+
+    }
+
+
+    jogos.forEach(
+        function(
+            jogo
+        ) {
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "card-jogo";
+
+
+            card.dataset.jogoId =
+                jogo.jogoId;
+
+
+            card.innerHTML = `
+
+                <div
+                    class="card-jogo-cabecalho"
+                >
+
+                    <span>
+                        Jogo ${jogo.jogoNumero}
+                    </span>
+
+                    <span>
+                        ${jogo.data}
+                        •
+                        ${jogo.hora}
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="card-jogo-confronto"
+                >
+
+                    <div
+                        class="time"
+                    >
+
+                        <span>
+                            ${jogo.mandante}
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="time"
+                    >
+
+                        <span>
+                            ${jogo.visitante}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
 
 }
