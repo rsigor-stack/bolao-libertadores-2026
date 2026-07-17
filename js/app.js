@@ -673,7 +673,6 @@ function renderizarJogos(
             "lista-jogos"
         );
 
-
     if (
         !container
     ) {
@@ -711,7 +710,10 @@ function renderizarJogos(
             jogo
         ) {
 
-
+            console.log(
+                "Processando jogo:",
+                jogo.jogoId
+            );
             const palpite =
                 App.palpites.find(
                     function(
@@ -727,7 +729,12 @@ function renderizarJogos(
 
                     }
                 );
-
+                console.log(
+                    "Palpite encontrado para",
+                        jogo.jogoId,
+                        ":",
+                        palpite
+                );
 
             const golsMandante =
                 palpite
