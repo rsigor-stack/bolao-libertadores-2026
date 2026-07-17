@@ -10,59 +10,7 @@
 
 // Mandante do jogo de ida conforme a planilha oficial do bolão.
 // Na volta, os mandos são automaticamente invertidos.
-/*
-const OITAVAS_CONFIG = [
 
-    {
-        id: "j1",
-        casa: "Estudiantes",
-        fora: "Universidad Católica"
-    },
-
-    {
-        id: "j2",
-        casa: "Rosario Central",
-        fora: "Corinthians"
-    },
-
-    {
-        id: "j3",
-        casa: "Cruzeiro",
-        fora: "Flamengo"
-    },
-
-    {
-        id: "j4",
-        casa: "Tolima",
-        fora: "Independiente del Valle"
-    },
-
-    {
-        id: "j5",
-        casa: "Mirassol",
-        fora: "LDU"
-    },
-
-    {
-        id: "j6",
-        casa: "Palmeiras",
-        fora: "Cerro Porteño"
-    },
-
-    {
-        id: "j7",
-        casa: "Platense",
-        fora: "Coquimbo Unido"
-    },
-
-    {
-        id: "j8",
-        casa: "Fluminense",
-        fora: "Independiente Rivadavia"
-    }
-
-];
-*/
 function obterOitavas() {
 
     if (
@@ -180,22 +128,6 @@ function adaptarConfronto(confronto) {
     };
 
 }
-/*
-function adaptarConfrontoConfig(confronto) {
-
-    return {
-
-        id: confronto.id,
-
-        casa: confronto.casa,
-
-        fora: confronto.fora
-
-    };
-
-}
-*/
-
 
 // ============================================================================
 // QUARTAS DE FINAL
