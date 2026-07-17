@@ -110,10 +110,6 @@ function inicializarConfrontos() {
 
     if (!confrontos.length) {
 
-        console.warn(
-            "Confrontos ainda não disponíveis."
-        );
-
         return false;
 
     }
@@ -121,6 +117,31 @@ function inicializarConfrontos() {
     OITAVAS = confrontos;
 
     return true;
+
+}
+function aguardarConfrontos() {
+
+    const timer = setInterval(() => {
+
+        if (
+
+            typeof App !== "undefined" &&
+
+            Array.isArray(App.confrontos) &&
+
+            App.confrontos.length >= 15
+
+        ) {
+
+            clearInterval(timer);
+
+            inicializarConfrontos();
+
+            iniciarPagina();
+
+        }
+
+    }, 100);
 
 }
 
@@ -1894,7 +1915,7 @@ function configurarEventos() {
 function init() {
 
     configurarEventos();
-
+    aguardarConfrontos();
     renderOitavas();
 
 }
