@@ -523,3 +523,76 @@ function restaurarSessao() {
     return true;
 
 }
+async function restaurarSessao() {
+
+    const sessaoSalva =
+        localStorage.getItem(
+            "bolao_libertadores_session"
+        );
+
+
+    if (
+        !sessaoSalva
+    ) {
+
+        mostrarTelaLogin();
+
+        return;
+
+    }
+
+
+    const sessao =
+        JSON.parse(
+            sessaoSalva
+        );
+
+
+    try {
+
+        const resposta =
+            await apiVerificarSessao(
+                sessao.token
+            );
+
+
+        if (
+            !resposta ||
+            !resposta.success
+        ) {
+
+            localStorage.removeItem(
+                "bolao_libertadores_session"
+            );
+
+
+            mostrarTelaLogin();
+
+            return;
+
+        }
+
+
+        App.sessao =
+            resposta.data;
+
+
+        mostrarTelaPrincipal();
+
+
+    }
+    catch (
+        erro
+    ) {
+
+        console.error(
+            "Erro ao validar sessão:",
+            erro
+        );
+
+
+        mostrarTelaLogin();
+
+    }
+
+}
