@@ -388,8 +388,8 @@ document.addEventListener(
             botaoSalvar
         ) {
 
-            salvarPalpite(
-                botaoSalvar.dataset.jogoId
+            /* salvarPalpite(
+                botaoSalvar.dataset.jogoId */
             );
 
         }
