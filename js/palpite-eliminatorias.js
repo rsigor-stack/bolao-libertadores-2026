@@ -226,7 +226,9 @@ function criarScoresIniciais() {
 }
 
 function carregarPalpitesExistentes() {
-
+    
+    console.log("Executando Carregamento de Palpites");
+    
     if (
 
         typeof App === "undefined" ||
