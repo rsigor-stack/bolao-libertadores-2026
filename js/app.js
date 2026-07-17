@@ -921,6 +921,12 @@ async function salvarPalpite(
             : null;
 
 
+    /*
+     * ============================================================
+     * TRAVA CONTRA DUPLO CLIQUE
+     * ============================================================
+     */
+
     if (
         botao &&
         botao.disabled
@@ -930,6 +936,7 @@ async function salvarPalpite(
             "Salvamento já em andamento:",
             jogoId
         );
+
 
         return;
 
@@ -944,142 +951,151 @@ async function salvarPalpite(
             true;
 
     }
-    
-    
-    console.log(
-        "Iniciando salvamento:",
-        jogoId
-    );
 
 
-    const card =
-        document.querySelector(
-
-            `.card-jogo[data-jogo-id="${jogoId}"]`
-
-        );
+    try {
 
 
-    if (
-        !card
-    ) {
+        /*
+         * ========================================================
+         * VALIDA CARD
+         * ========================================================
+         */
 
-        console.error(
-            "Card do jogo não encontrado:",
-            jogoId
-        );
+        if (
+            !card
+        ) {
 
-
-        return;
-
-    }
-
-
-    const inputMandante =
-        card.querySelector(
-
-            '[data-campo="mandante"]'
-
-        );
+            console.error(
+                "Card do jogo não encontrado:",
+                jogoId
+            );
 
 
-    const inputVisitante =
-        card.querySelector(
+            return;
 
-            '[data-campo="visitante"]'
-
-        );
+        }
 
 
-    if (
-        !inputMandante ||
-        !inputVisitante
-    ) {
+        /*
+         * ========================================================
+         * LOCALIZA CAMPOS DE GOLS
+         * ========================================================
+         */
 
-        console.error(
-            "Campos de gols não encontrados."
-        );
-
-
-        return;
-
-    }
+        const inputMandante =
+            card.querySelector(
+                '[data-campo="mandante"]'
+            );
 
 
-    const golsMandante =
-        inputMandante.value;
+        const inputVisitante =
+            card.querySelector(
+                '[data-campo="visitante"]'
+            );
 
 
-    const golsVisitante =
-        inputVisitante.value;
+        if (
+            !inputMandante ||
+            !inputVisitante
+        ) {
+
+            console.error(
+                "Campos de gols não encontrados."
+            );
 
 
-    if (
-        golsMandante === "" ||
-        golsVisitante === ""
-    ) {
+            return;
 
-        alert(
-            "Informe o placar completo."
-        );
+        }
 
 
-        return;
+        /*
+         * ========================================================
+         * LÊ PLACAR
+         * ========================================================
+         */
 
-    }
-
-
-    const jogo =
-        App.jogos.find(
-
-            function(
-                item
-            ) {
-
-                return (
-
-                    item.jogoId ===
-                    jogoId
-
-                );
-
-            }
-
-        );
+        const golsMandante =
+            inputMandante.value;
 
 
-    if (
-        !jogo
-    ) {
-
-        console.error(
-            "Jogo não encontrado:",
-            jogoId
-        );
+        const golsVisitante =
+            inputVisitante.value;
 
 
-        return;
+        if (
+            golsMandante === "" ||
+            golsVisitante === ""
+        ) {
 
-    }
+            alert(
+                "Informe o placar completo."
+            );
 
 
-    const dados =
-        {
+            return;
+
+        }
+
+
+        /*
+         * ========================================================
+         * LOCALIZA JOGO
+         * ========================================================
+         */
+
+        const jogo =
+            App.jogos.find(
+                function(
+                    item
+                ) {
+
+                    return (
+
+                        item.jogoId ===
+                        jogoId
+
+                    );
+
+                }
+            );
+
+
+        if (
+            !jogo
+        ) {
+
+            console.error(
+                "Jogo não encontrado:",
+                jogoId
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+         * ========================================================
+         * MONTA DADOS DO PALPITE
+         * ========================================================
+         */
+
+        const dados = {
 
             jogoId:
-
                 jogo.jogoId,
 
 
             golsMandante:
-
                 Number(
                     golsMandante
                 ),
 
 
             golsVisitante:
-
                 Number(
                     golsVisitante
                 )
@@ -1087,74 +1103,91 @@ async function salvarPalpite(
         };
 
 
-    console.log(
-        "Dados do palpite:",
-        dados
-    );
+        console.log(
+            "Dados do palpite:",
+            dados
+        );
 
-    try {
-    
+
+        /*
+         * ========================================================
+         * ENVIA PARA API
+         * ========================================================
+         */
+
         const resposta =
             await apiSalvarPalpite(
                 dados
             );
-    
-    
+
+
+        /*
+         * ========================================================
+         * TRATA RESPOSTA
+         * ========================================================
+         */
+
         if (
             !resposta ||
             !resposta.success
         ) {
-    
+
             console.error(
                 "Falha ao salvar palpite:",
                 resposta
             );
-    
-    
+
+
             alert(
-    
                 resposta?.message ||
-    
                 "Não foi possível salvar o palpite."
-    
             );
-    
-    
+
+
             return;
-    
+
         }
-    
-    
+
+
         console.log(
             "Palpite salvo com sucesso:",
             resposta
         );
-    
-    
+
+
         alert(
             "Palpite salvo com sucesso."
         );
-    
-    
+
+
     }
+
+
     catch (
         erro
     ) {
-    
+
         console.error(
             "Erro ao salvar palpite:",
             erro
         );
-    
-    
+
+
         alert(
             "Não foi possível salvar o palpite."
         );
-    
+
     }
 
-    
+
     finally {
+
+
+        /*
+         * ========================================================
+         * LIBERA BOTÃO
+         * ========================================================
+         */
 
         if (
             botao
@@ -1166,5 +1199,5 @@ async function salvarPalpite(
         }
 
     }
-  
+
 }
