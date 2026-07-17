@@ -2912,3 +2912,80 @@ function determinarPalpiteClassificadoSeguinte(
     };
 
 }
+
+function gerarPalpiteClassificadoSeguinte(
+    confrontoId
+) {
+
+    const confronto =
+        App.confrontos.find(
+            function(
+                item
+            ) {
+
+                return (
+
+                    item.ConfrontoID ===
+                    confrontoId
+
+                );
+
+            }
+        );
+
+
+    if (
+        !confronto
+    ) {
+
+        return null;
+
+    }
+
+
+    const resultado =
+        determinarPalpiteClassificadoSeguinte(
+            confronto
+        );
+
+
+    if (
+        !resultado ||
+        !resultado.classificado
+    ) {
+
+        return null;
+
+    }
+
+
+    const confrontoSeguinte =
+        resultado.confrontoSeguinte;
+
+
+    if (
+        !confrontoSeguinte
+    ) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        fase:
+            confrontoSeguinte.Fase,
+
+        tipoPalpite:
+            "CLASSIFICADO",
+
+        referenciaId:
+            confrontoSeguinte.ConfrontoID,
+
+        valor:
+            resultado.classificado
+
+    };
+
+}
