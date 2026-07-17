@@ -98,7 +98,8 @@ function aguardarConfrontos() {
                 inicializarConfrontos();
 
             if (inicializado) {
-
+                
+                carregarPalpitesExistentes();
                 init();
 
             }
