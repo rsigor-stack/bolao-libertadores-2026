@@ -48,6 +48,11 @@ document.addEventListener(
 
         }
 
+
+        document.body.classList.remove(
+            "app-inicializando"
+        );
+
     }
 );
 
