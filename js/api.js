@@ -366,3 +366,51 @@ async function apiVerificarSessao(token) {
     }
 
 }
+
+async function apiListarJogos() {
+
+    console.log(
+        "Carregando jogos..."
+    );
+
+
+    try {
+
+        const resultado =
+            await apiRequest(
+
+                "listarJogos",
+
+                {
+
+                    method: "GET"
+
+                }
+
+            );
+
+
+        console.log(
+            "Resposta dos jogos:",
+            resultado
+        );
+
+
+        return resultado;
+
+    }
+    catch (
+        erro
+    ) {
+
+        console.error(
+            "Erro ao carregar jogos:",
+            erro
+        );
+
+
+        throw erro;
+
+    }
+
+}
