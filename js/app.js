@@ -246,6 +246,8 @@ async function realizarLogin() {
 
         atualizarTituloPagina();
 
+        atualizarTituloAplicacao();
+
         console.log(
 
             "Login realizado:",
@@ -301,6 +303,8 @@ function realizarLogout() {
         null;
 
     atualizarTituloPagina();
+
+    atualizarTituloAplicacao();
 
     localStorage.removeItem(
         "bolao_libertadores_session"
@@ -1222,6 +1226,41 @@ function atualizarTituloPagina() {
 
 
     document.title =
+        "Bolão Libertadores 2026";
+
+}
+function atualizarTituloAplicacao() {
+
+    const titulo =
+        document.getElementById(
+            "titulo-aplicacao"
+        );
+
+
+    if (
+        !titulo
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        App.sessao &&
+        App.sessao.participante
+    ) {
+
+        titulo.textContent =
+            "Bolão Libertadores 2026 - " +
+            App.sessao.participante;
+
+        return;
+
+    }
+
+
+    titulo.textContent =
         "Bolão Libertadores 2026";
 
 }
