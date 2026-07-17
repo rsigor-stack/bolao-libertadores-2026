@@ -998,9 +998,44 @@ function criarCardJogo(
             class="status-palpite"
             data-status="${statusInicial}"
         >
-
+        
             ${textoStatusInicial}
-
+        
+        </div>
+        
+        
+        <div
+            class="classificado-automatico"
+        >
+        
+            Classificado:
+        
+            <strong>
+                A definir
+            </strong>
+        
+        </div>
+        
+        
+        <div
+            class="selecao-classificado"
+            hidden
+        >
+        
+            <label>
+        
+                Classificado:
+        
+                <select>
+        
+                    <option value="">
+                        Selecione
+                    </option>
+        
+                </select>
+        
+            </label>
+        
         </div>
 
 
