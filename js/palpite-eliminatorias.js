@@ -105,7 +105,7 @@ function obterOitavas() {
 
     return OITAVAS_CONFIG.map(
 
-        adaptarConfronto
+        adaptarConfrontoConfig
 
     );
 
@@ -122,6 +122,20 @@ function adaptarConfronto(confronto) {
         casa: confronto.TimeA,
 
         fora: confronto.TimeB
+
+    };
+
+}
+
+function adaptarConfrontoConfig(confronto) {
+
+    return {
+
+        id: confronto.id,
+
+        casa: confronto.casa,
+
+        fora: confronto.fora
 
     };
 
