@@ -909,6 +909,51 @@ async function salvarPalpite(
 
     const card =
         document.querySelector(
+            `.card-jogo[data-jogo-id="${jogoId}"]`
+        );
+
+
+    const botao =
+        card
+            ? card.querySelector(
+                ".btn-salvar-palpite"
+            )
+            : null;
+
+
+    if (
+        botao &&
+        botao.disabled
+    ) {
+
+        console.log(
+            "Salvamento já em andamento:",
+            jogoId
+        );
+
+        return;
+
+    }
+
+
+    if (
+        botao
+    ) {
+
+        botao.disabled =
+            true;
+
+    }
+    
+    
+    console.log(
+        "Iniciando salvamento:",
+        jogoId
+    );
+
+
+    const card =
+        document.querySelector(
 
             `.card-jogo[data-jogo-id="${jogoId}"]`
 
@@ -1108,4 +1153,18 @@ async function salvarPalpite(
     
     }
 
+    
+    finally {
+
+        if (
+            botao
+        ) {
+
+            botao.disabled =
+                false;
+
+        }
+
+    }
+  
 }
