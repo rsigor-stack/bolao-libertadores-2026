@@ -24,7 +24,9 @@ async function apiRequest(
 
         method = "GET",
 
-        body = null
+        body = null,
+
+        params = null
 
     } = options;
 
@@ -35,6 +37,35 @@ async function apiRequest(
         encodeURIComponent(
             action
         );
+
+
+    if (
+        params
+    ) {
+
+        Object.keys(
+            params
+        ).forEach(
+            function(
+                chave
+            ) {
+
+                url +=
+                    "&" +
+                    encodeURIComponent(
+                        chave
+                    ) +
+                    "=" +
+                    encodeURIComponent(
+                        params[
+                            chave
+                        ]
+                    );
+
+            }
+        );
+
+    }
 
 
     const config = {
@@ -84,8 +115,11 @@ async function apiRequest(
 
         const response =
             await fetch(
+
                 url,
+
                 config
+
             );
 
 
@@ -111,7 +145,9 @@ async function apiRequest(
 
 
     }
-    catch (erro) {
+    catch (
+        erro
+    ) {
 
         console.error(
             "Erro dentro de apiRequest:",
@@ -274,12 +310,59 @@ async function apiSalvarPalpite(
 }
 async function apiVerificarSessao(token) {
 
-    return apiRequest(
-        "verificarSessao",
-        "GET",
-        {
-            token: token
-        }
+    console.log(
+        "Verificando sessão..."
     );
+
+
+    console.log(
+        "Token:",
+        token
+    );
+
+
+    try {
+
+        const resultado =
+            await apiRequest(
+
+                "verificarSessao",
+
+                {
+
+                    method: "GET",
+
+                    params: {
+
+                        token
+
+                    }
+
+                }
+
+            );
+
+
+        console.log(
+            "Resposta da verificação:",
+            resultado
+        );
+
+
+        return resultado;
+
+
+    }
+    catch (erro) {
+
+        console.error(
+            "Erro ao verificar sessão:",
+            erro
+        );
+
+
+        throw erro;
+
+    }
 
 }
