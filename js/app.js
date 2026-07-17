@@ -1233,7 +1233,7 @@ function atualizarTituloAplicacao() {
 
     const titulo =
         document.getElementById(
-            "titulo-aplicacao"
+            "titulo-pagina"
         );
 
 
