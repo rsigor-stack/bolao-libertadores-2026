@@ -10,7 +10,7 @@
 
 // Mandante do jogo de ida conforme a planilha oficial do bolão.
 // Na volta, os mandos são automaticamente invertidos.
-
+/*
 const OITAVAS_CONFIG = [
 
     {
@@ -62,52 +62,43 @@ const OITAVAS_CONFIG = [
     }
 
 ];
-
+*/
 function obterOitavas() {
 
     if (
 
-        typeof App !== "undefined" &&
+        typeof App === "undefined" ||
 
-        Array.isArray(App.confrontos)
+        !Array.isArray(App.confrontos)
 
     ) {
 
-        const confrontos = App.confrontos
+        console.error(
+            "App.confrontos não está disponível."
+        );
 
-            .filter(confronto =>
-
-                confronto.Fase === "OITAVAS"
-
-            )
-
-            .sort((a, b) =>
-
-                Number(a.Ordem) -
-
-                Number(b.Ordem)
-
-            );
-
-
-        if (confrontos.length === 8) {
-
-            return confrontos.map(
-
-                adaptarConfronto
-
-            );
-
-        }
+        return [];
 
     }
 
 
-    return OITAVAS_CONFIG.map(
+    return App.confrontos
 
-        adaptarConfrontoConfig
+        .filter(confronto =>
 
-    );
+            confronto.Fase === "OITAVAS"
+
+        )
+
+        .sort((a, b) =>
+
+            Number(a.Ordem) -
+
+            Number(b.Ordem)
+
+        )
+
+        .map(adaptarConfronto);
 
 }
 
@@ -126,7 +117,7 @@ function adaptarConfronto(confronto) {
     };
 
 }
-
+/*
 function adaptarConfrontoConfig(confronto) {
 
     return {
@@ -140,7 +131,7 @@ function adaptarConfrontoConfig(confronto) {
     };
 
 }
-
+*/
 
 
 // ============================================================================
