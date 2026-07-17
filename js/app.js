@@ -3067,3 +3067,58 @@ function encontrarPalpiteClassificado(
     );
 
 }
+function resolverClassificadoOitavas(
+    confrontoId
+) {
+
+    const confronto =
+        encontrarConfronto(
+            confrontoId
+        );
+
+
+    if (
+        !confronto
+    ) {
+
+        return null;
+
+    }
+
+
+    const resultado =
+        determinarClassificadoConfronto(
+            confronto
+        );
+
+
+    if (
+        !resultado
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        !resultado.completo
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        !resultado.classificado
+    ) {
+
+        return null;
+
+    }
+
+
+    return resultado.classificado;
+
+}
