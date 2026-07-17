@@ -191,49 +191,34 @@ async function realizarLogin() {
             return;
 
         }
-        if (
-            respósta.success
-            ) {
+        if (resposta.success) {
     
             const sessao = {
+                token:
+                    resultado.data.token,
+                participante:
+                    participante
+            };
 
-            token:
-                resultado.data.token,
-    
-            participante:
-                participante
-    
-        };
-
-
-        localStorage.setItem(
-
-            "bolao_libertadores_session",
-    
-            JSON.stringify(
+            localStorage.setItem(
+                "bolao_libertadores_session",
+                JSON.stringify(sessao)
+            );
+       
+            console.log(
+                "Sessão salva:",
                 sessao
-            )
-    
+            );
+
+            App.sessao =
+                resposta.data;
+
+            console.log(
+                "Login realizado:",
+                App.sessao
         );
-        
-        
-        console.log(
-            "Sessão salva:",
-            sessao
-        );
-
-        App.sessao =
-            resposta.data;
-
-
-        console.log(
-            "Login realizado:",
-            App.sessao
-        );
-
 
         mostrarTelaPrincipal();
-
 
     }
     catch (erro) {
