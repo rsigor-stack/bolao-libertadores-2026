@@ -3122,3 +3122,53 @@ function resolverClassificadoOitavas(
     return resultado.classificado;
 
 }
+
+function resolverParticipanteConfronto(
+    valor
+) {
+
+    const confrontoReferenciado =
+        encontrarConfronto(
+            valor
+        );
+
+
+    /*
+     * ============================================================
+     * CASO 1 — VALOR É UM CONFRONTO
+     * ============================================================
+     */
+
+    if (
+        confrontoReferenciado
+    ) {
+
+        const classificado =
+            resolverClassificadoOitavas(
+                valor
+            );
+
+
+        if (
+            classificado
+        ) {
+
+            return classificado;
+
+        }
+
+
+        return "A definir";
+
+    }
+
+
+    /*
+     * ============================================================
+     * CASO 2 — VALOR JÁ É UM TIME
+     * ============================================================
+     */
+
+    return valor;
+
+}
