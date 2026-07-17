@@ -707,3 +707,35 @@ async function apiSalvarPalpitesLote(
     );
 
 }
+async function apiListarConfrontos() {
+
+    const sessao =
+        obterSessao();
+
+
+    if (
+        !sessao ||
+        !sessao.token
+    ) {
+
+        throw new Error(
+            "Sessão não encontrada."
+        );
+
+    }
+
+
+    return apiRequest(
+
+        "listarConfrontos",
+
+        {
+
+            method:
+                "GET"
+
+        }
+
+    );
+
+}
