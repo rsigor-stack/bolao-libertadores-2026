@@ -826,26 +826,6 @@ function renderizarJogos(
             )
         ];
 
-
-        setTimeout(
-            function() {
-        
-                confrontos.forEach(
-                    function(
-                        confrontoId
-                    ) {
-        
-                        atualizarClassificadoDoConfronto(
-                            confrontoId
-                        );
-        
-                    }
-                );
-        
-            },
-            0
-        );
-
 }
 
 function criarCardJogo(
@@ -1046,41 +1026,6 @@ function criarCardJogo(
         </div>
         
         
-        <div
-            class="classificado-automatico"
-        >
-        
-            Classificado:
-        
-            <strong>
-                A definir
-            </strong>
-        
-        </div>
-        
-        
-        <div
-            class="selecao-classificado"
-            hidden
-        >
-        
-            <label>
-        
-                Classificado:
-        
-                <select>
-        
-                    <option value="">
-                        Selecione
-                    </option>
-        
-                </select>
-        
-            </label>
-        
-        </div>
-
-
         <button
 
             class="btn-salvar-palpite"
