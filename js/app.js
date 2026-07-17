@@ -890,6 +890,27 @@ function renderizarJogos(
                 card
             );
 
+            const botaoSalvar =
+            card.querySelector(
+                ".btn-salvar-palpite"
+            );
+
+            botaoSalvar.addEventListener(
+                "click",
+                function() {
+
+                    console.log(
+                    "Clique detectado no botão:",
+                    jogo.jogoId
+                    );
+
+                salvarPalpite(
+                    jogo.jogoId
+                );
+
+            }
+        );
+
         }
     );
 
