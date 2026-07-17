@@ -720,12 +720,18 @@ function renderizarJogos(
                         item
                     ) {
 
-                        return (
+                    return (
 
-                            item.referenciaId ===
-                            jogo.jogoId
+                        item.referenciaId ===
+                        jogo.jogoId ||
 
-                        );
+                        item.referenciaID ===
+                        jogo.jogoId ||
+
+                        item.ReferenciaID ===
+                        jogo.jogoId
+
+                    );
 
                     }
                 );
