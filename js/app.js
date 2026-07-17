@@ -804,6 +804,41 @@ function renderizarJogos(
         }
     );
 
+
+    /*
+     * ========================================================
+     * ATUALIZA CLASSIFICADOS INICIAIS
+     * ========================================================
+     */
+
+    const confrontos =
+        [
+            ...new Set(
+                jogos.map(
+                    function(
+                        jogo
+                    ) {
+
+                        return jogo.confrontoId;
+
+                    }
+                )
+            )
+        ];
+
+
+    confrontos.forEach(
+        function(
+            confrontoId
+        ) {
+
+            atualizarClassificadoDoConfronto(
+                confrontoId
+            );
+
+        }
+    );
+
 }
 
 function criarCardJogo(
@@ -1222,16 +1257,6 @@ function criarCardJogo(
         }
     );
     
-    /*
-     * ========================================================
-     * ATUALIZA CLASSIFICADO INICIAL
-     * ========================================================
-     */
-    
-    atualizarClassificadoDoConfronto(
-        jogo.confrontoId
-    );
-
     return card;
 
 }
