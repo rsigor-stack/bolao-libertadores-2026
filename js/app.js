@@ -3223,3 +3223,89 @@ function resolverConfronto(
     };
 
 }
+function resolverParticipanteConfronto(
+    valor
+) {
+
+    const confrontoReferenciado =
+        encontrarConfronto(
+            valor
+        );
+
+
+    /*
+     * ============================================================
+     * VALOR NÃO É UM CONFRONTO
+     * ============================================================
+     */
+
+    if (
+        !confrontoReferenciado
+    ) {
+
+        return valor;
+
+    }
+
+
+    /*
+     * ============================================================
+     * OITAVAS
+     * ============================================================
+     */
+
+    if (
+
+        String(
+            confrontoReferenciado.Fase
+        ).trim().toUpperCase()
+
+        ===
+
+        "OITAVAS"
+
+    ) {
+
+        const classificado =
+            resolverClassificadoOitavas(
+                valor
+            );
+
+
+        return classificado
+            ? classificado
+            : "A definir";
+
+    }
+
+
+    /*
+     * ============================================================
+     * FASES POSTERIORES
+     * ============================================================
+     */
+
+    const palpite =
+        encontrarPalpiteClassificado(
+            valor
+        );
+
+
+    if (
+        !palpite
+    ) {
+
+        return "A definir";
+
+    }
+
+
+    return (
+
+        palpite.valor
+        ??
+        palpite.Valor
+
+    );
+
+}
