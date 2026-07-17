@@ -2788,39 +2788,39 @@ function encontrarConfrontoSeguinte(
     confrontoId
 ) {
 
-    if (
-        !confrontoId
-    ) {
+    return App.confrontos.find(
+        function(
+            confronto
+        ) {
 
-        return null;
+            return (
 
-    }
+                String(
+                    confronto.TimeA
+                ).trim()
 
+                ===
 
-    const confrontoSeguinte =
-        App.confrontos.find(
-            function(
-                confronto
-            ) {
-
-                return (
-
-                    confronto.TimeA ===
+                String(
                     confrontoId
+                ).trim()
 
-                    ||
+                ||
 
-                    confronto.TimeB ===
+                String(
+                    confronto.TimeB
+                ).trim()
+
+                ===
+
+                String(
                     confrontoId
+                ).trim()
 
-                );
+            );
 
-            }
-        );
-
-
-    return confrontoSeguinte ||
-        null;
+        }
+    );
 
 }
 
