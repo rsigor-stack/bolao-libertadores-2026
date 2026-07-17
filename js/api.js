@@ -75,23 +75,6 @@ async function apiRequest(
     };
 
 
-    console.log(
-        "URL:",
-        url
-    );
-
-
-    console.log(
-        "Método:",
-        method
-    );
-
-
-    console.log(
-        "Body original:",
-        body
-    );
-
 
     if (
         method === "POST"
@@ -104,13 +87,6 @@ async function apiRequest(
 
     }
 
-
-    console.log(
-        "Body enviado:",
-        config.body
-    );
-
-
     try {
 
         const response =
@@ -122,28 +98,12 @@ async function apiRequest(
 
             );
 
-
-        console.log(
-            "Resposta HTTP:",
-            response.status
-        );
-
-
         const texto =
             await response.text();
-
-
-        console.log(
-            "Texto recebido:",
-            texto
-        );
-
 
         return JSON.parse(
             texto
         );
-
-
     }
     catch (
         erro
@@ -171,20 +131,6 @@ async function apiLogin(
     senha
 ) {
 
-    console.log(
-        "1. Iniciando login"
-    );
-
-
-    console.log(
-        "2. Dados enviados:",
-        {
-            participante,
-            senha
-        }
-    );
-
-
     try {
 
         const resultado =
@@ -207,15 +153,7 @@ async function apiLogin(
 
             );
 
-
-        console.log(
-            "3. Resposta da API:",
-            resultado
-        );
-
-
         return resultado;
-
 
     }
     catch (erro) {
@@ -257,11 +195,6 @@ async function apiListarJogos() {
 
 async function apiListarPalpites() {
 
-    console.log(
-        "Carregando palpites..."
-    );
-
-
     const sessao =
         App.sessao;
 
@@ -299,13 +232,6 @@ async function apiListarPalpites() {
                 }
 
             );
-
-
-        console.log(
-            "Resposta original dos palpites:",
-            resultado
-        );
-
 
         if (
 
@@ -360,13 +286,6 @@ async function apiListarPalpites() {
 
         }
 
-
-        console.log(
-            "Palpites normalizados:",
-            resultado
-        );
-
-
         return resultado;
 
     }
@@ -414,17 +333,6 @@ async function apiSalvarPalpite(
 }
 async function apiVerificarSessao(token) {
 
-    console.log(
-        "Verificando sessão..."
-    );
-
-
-    console.log(
-        "Token:",
-        token
-    );
-
-
     try {
 
         const resultado =
@@ -446,15 +354,7 @@ async function apiVerificarSessao(token) {
 
             );
 
-
-        console.log(
-            "Resposta da verificação:",
-            resultado
-        );
-
-
         return resultado;
-
 
     }
     catch (erro) {
@@ -473,11 +373,6 @@ async function apiVerificarSessao(token) {
 
 async function apiListarJogos() {
 
-    console.log(
-        "Carregando jogos..."
-    );
-
-
     try {
 
         const resultado =
@@ -492,13 +387,6 @@ async function apiListarJogos() {
                 }
 
             );
-
-
-        console.log(
-            "Resposta dos jogos:",
-            resultado
-        );
-
 
         return resultado;
 
@@ -520,11 +408,6 @@ async function apiListarJogos() {
 }
 
 async function apiListarPalpites() {
-
-    console.log(
-        "Carregando palpites..."
-    );
-
 
     const sessao =
         App.sessao;
@@ -564,13 +447,6 @@ async function apiListarPalpites() {
 
             );
 
-
-        console.log(
-            "Resposta dos palpites:",
-            resultado
-        );
-
-
         return resultado;
 
     }
@@ -592,12 +468,6 @@ async function apiListarPalpites() {
 async function apiSalvarPalpite(
     dados
 ) {
-
-    console.log(
-        "Enviando palpite para a API:",
-        dados
-    );
-
 
     const sessao =
         App.sessao;
@@ -643,13 +513,6 @@ async function apiSalvarPalpite(
             }
 
         );
-
-
-    console.log(
-        "Resposta do salvamento:",
-        resultado
-    );
-
 
     return resultado;
 
@@ -741,11 +604,6 @@ async function apiListarConfrontos() {
 }
 async function apiListarConfrontos() {
 
-    console.log(
-        "Carregando confrontos..."
-    );
-
-
     const token =
         App.sessao &&
         App.sessao.token
@@ -767,16 +625,8 @@ async function apiListarConfrontos() {
             url
         );
 
-
     const texto =
         await resposta.text();
-
-
-    console.log(
-        "Confrontos recebidos:",
-        texto
-    );
-
 
     return JSON.parse(
         texto
