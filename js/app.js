@@ -1751,54 +1751,86 @@ async function salvarTodosPalpites() {
 
     }
 
-    let quantidadeSalva =  0;
 
-    for (
-        const card
-        of cardsAlterados
-    ) {
-    
-        const jogoId =
-            card.dataset.jogoId;
-    
-    
-        console.log(
-            "Salvando palpite:",
-            jogoId
+    /*
+     * ============================================================
+     * PREPARA OS SALVAMENTOS
+     * ============================================================
+     */
+
+    const promessas =
+        cardsAlterados.map(
+            function(card) {
+
+                const jogoId =
+                    card.dataset.jogoId;
+
+
+                console.log(
+                    "Salvando palpite:",
+                    jogoId
+                );
+
+
+                return salvarPalpite(
+                    jogoId,
+                    false
+                );
+
+            }
         );
-    
-    
-        const sucesso =
-            await salvarPalpite(
-                jogoId,
-                false
-            );
-    
-    
-        if (
-            sucesso
-        ) {
-    
-            quantidadeSalva++;
-    
-        }
-    
-    }
+
+
+    /*
+     * ============================================================
+     * EXECUTA TODOS OS SALVAMENTOS EM PARALELO
+     * ============================================================
+     */
+
+    const resultados =
+        await Promise.all(
+            promessas
+        );
+
+
+    /*
+     * ============================================================
+     * CONTABILIZA SUCESSOS
+     * ============================================================
+     */
+
+    const quantidadeSalva =
+        resultados.filter(
+            function(sucesso) {
+
+                return sucesso === true;
+
+            }
+        ).length;
+
+
+    /*
+     * ============================================================
+     * MENSAGEM FINAL
+     * ============================================================
+     */
+
     if (
         quantidadeSalva > 0
     ) {
-    
+
         alert(
-    
+
             quantidadeSalva === 1
-    
+
                 ? "1 palpite salvo com sucesso."
-    
+
                 : `${quantidadeSalva} palpites salvos com sucesso.`
-    
+
         );
-    
+
     }
+
 
     console.log(
         "Processo de salvamento concluído."
