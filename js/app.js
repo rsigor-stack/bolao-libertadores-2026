@@ -2783,3 +2783,132 @@ function atualizarClassificadoDoConfronto(
         true;
 
 }
+
+function encontrarConfrontoSeguinte(
+    confrontoId
+) {
+
+    if (
+        !confrontoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const confrontoSeguinte =
+        App.confrontos.find(
+            function(
+                confronto
+            ) {
+
+                return (
+
+                    confronto.TimeA ===
+                    confrontoId
+
+                    ||
+
+                    confronto.TimeB ===
+                    confrontoId
+
+                );
+
+            }
+        );
+
+
+    return confrontoSeguinte ||
+        null;
+
+}
+
+function determinarPalpiteClassificadoSeguinte(
+    confronto
+) {
+
+    if (
+        !confronto
+    ) {
+
+        return null;
+
+    }
+
+
+    const resultado =
+        determinarClassificadoConfronto(
+            confronto
+        );
+
+
+    if (
+        resultado.classificado
+    ) {
+
+        return {
+
+            confrontoAtual:
+                confronto.ConfrontoID,
+
+            confrontoSeguinte:
+                encontrarConfrontoSeguinte(
+                    confronto.ConfrontoID
+                ),
+
+            classificado:
+                resultado.classificado,
+
+            origem:
+                "AUTOMATICO"
+
+        };
+
+    }
+
+
+    if (
+        resultado.empate
+    ) {
+
+        return {
+
+            confrontoAtual:
+                confronto.ConfrontoID,
+
+            confrontoSeguinte:
+                encontrarConfrontoSeguinte(
+                    confronto.ConfrontoID
+                ),
+
+            classificado:
+                null,
+
+            origem:
+                "ESCOLHA_MANUAL"
+
+        };
+
+    }
+
+
+    return {
+
+        confrontoAtual:
+            confronto.ConfrontoID,
+
+        confrontoSeguinte:
+            encontrarConfrontoSeguinte(
+                confronto.ConfrontoID
+            ),
+
+        classificado:
+            null,
+
+        origem:
+            "INCOMPLETO"
+
+    };
+
+}
