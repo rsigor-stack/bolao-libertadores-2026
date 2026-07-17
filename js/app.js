@@ -1136,13 +1136,29 @@ function criarCardJogo(
 
     inputMandante.addEventListener(
         "input",
-        atualizarStatus
+        function() {
+    
+            atualizarStatus();
+    
+            atualizarClassificadoDoConfronto(
+                jogo.confrontoId
+            );
+    
+        }
     );
-
-
+    
+    
     inputVisitante.addEventListener(
         "input",
-        atualizarStatus
+        function() {
+    
+            atualizarStatus();
+    
+            atualizarClassificadoDoConfronto(
+                jogo.confrontoId
+            );
+    
+        }
     );
 
 
@@ -2552,5 +2568,100 @@ function determinarClassificadoConfronto(
             true
 
     };
+
+}
+function atualizarClassificadoDoConfronto(
+    confrontoId
+) {
+
+
+    const confronto =
+        App.confrontos.find(
+            function(
+                item
+            ) {
+
+                return (
+
+                    item.ConfrontoID ===
+                    confrontoId
+
+                );
+
+            }
+        );
+
+
+    if (
+        !confronto
+    ) {
+
+        return;
+
+    }
+
+
+    const resultado =
+        determinarClassificadoConfronto(
+            confronto
+        );
+
+
+    const cardConfronto =
+        document.querySelector(
+            `.card-confronto[data-confronto-id="${confrontoId}"]`
+        );
+
+
+    if (
+        !cardConfronto
+    ) {
+
+        return;
+
+    }
+
+
+    const elemento =
+        cardConfronto.querySelector(
+            ".classificado-confronto strong"
+        );
+
+
+    if (
+        !elemento
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        resultado.classificado
+    ) {
+
+        elemento.textContent =
+            resultado.classificado;
+
+        return;
+
+    }
+
+
+    if (
+        resultado.empate
+    ) {
+
+        elemento.textContent =
+            "Empate — definição pendente";
+
+        return;
+
+    }
+
+
+    elemento.textContent =
+        "A definir";
 
 }
