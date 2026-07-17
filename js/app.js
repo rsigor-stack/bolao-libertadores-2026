@@ -171,7 +171,6 @@ async function realizarLogin() {
 
     try {
 
-
         const resposta =
             await apiLogin(
                 participante,
@@ -191,46 +190,73 @@ async function realizarLogin() {
             return;
 
         }
-        if (resposta.success) {
-    
-            const sessao = {
-                token:
-                    resultado.data.token,
-                participante:
-                    participante
-            };
 
-            localStorage.setItem(
-                "bolao_libertadores_session",
-                JSON.stringify(sessao)
-            );
-       
-            console.log(
-                "Sessão salva:",
+
+        const sessao = {
+
+            token:
+                resposta.data.token,
+
+            participante:
+                participante
+
+        };
+
+
+        localStorage.setItem(
+
+            "bolao_libertadores_session",
+
+            JSON.stringify(
                 sessao
-            );
+            )
 
-            App.sessao =
-                resposta.data;
-
-            console.log(
-                "Login realizado:",
-                App.sessao
         );
+
+
+        console.log(
+
+            "Sessão salva:",
+
+            sessao
+
+        );
+
+
+        App.sessao =
+            resposta.data;
+
+
+        console.log(
+
+            "Login realizado:",
+
+            App.sessao
+
+        );
+
 
         mostrarTelaPrincipal();
 
+
     }
-    catch (erro) {
+
+    catch (
+        erro
+    ) {
 
 
         console.error(
+
             "Erro no login:",
+
             erro
+
         );
 
 
         mensagem.textContent =
+
             "Não foi possível conectar ao servidor.";
 
     }
