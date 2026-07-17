@@ -94,8 +94,14 @@ function aguardarDados() {
 
             typeof App !== "undefined" &&
 
-            Array.isArray(App.palpites);
+            Array.isArray(App.palpites) &&
 
+             App.palpites.some(p =>
+
+                 p.Fase === "Oitavas" &&
+    
+                 p.TipoPalpite === "PLACAR"
+                 );
 
         if (
 
