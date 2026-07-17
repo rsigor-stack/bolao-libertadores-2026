@@ -654,3 +654,56 @@ async function apiSalvarPalpite(
     return resultado;
 
 }
+
+async function apiSalvarPalpitesLote(
+    palpites
+) {
+
+    const sessao =
+        obterSessao();
+
+
+    if (
+        !sessao ||
+        !sessao.token
+    ) {
+
+        return {
+
+            success:
+                false,
+
+            message:
+                "Sessão inválida."
+
+        };
+
+    }
+
+
+    return apiRequest(
+
+        "salvarPalpitesLote",
+
+        {
+
+            method:
+                "POST",
+
+            body: {
+
+                token:
+                    sessao.token,
+
+                palpites:
+                    JSON.stringify(
+                        palpites
+                    )
+
+            }
+
+        }
+
+    );
+
+}
