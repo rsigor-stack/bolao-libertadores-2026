@@ -14,13 +14,20 @@
 
 const App = {
 
-    sessao: null,
+    sessao:
+        null,
 
-    jogos: [],
+    jogos:
+        [],
 
-    palpites: [],
+    confrontos:
+        [],
 
-    telaAtual: "login"
+    palpites:
+        [],
+
+    telaAtual:
+        "login"
 
 };
 
