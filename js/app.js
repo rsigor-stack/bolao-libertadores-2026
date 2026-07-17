@@ -680,6 +680,7 @@ function renderizarJogos(
             "lista-jogos"
         );
 
+
     if (
         !container
     ) {
@@ -717,37 +718,55 @@ function renderizarJogos(
             jogo
         ) {
 
+
             console.log(
                 "Processando jogo:",
                 jogo.jogoId
             );
+
+
+            /*
+             * ========================================================
+             * LOCALIZA PALPITE EXISTENTE
+             * ========================================================
+             */
+
             const palpite =
                 App.palpites.find(
                     function(
                         item
                     ) {
 
-                    return (
+                        return (
 
-                        item.referenciaId ===
-                        jogo.jogoId ||
+                            item.referenciaId ===
+                            jogo.jogoId ||
 
-                        item.referenciaID ===
-                        jogo.jogoId ||
+                            item.referenciaID ===
+                            jogo.jogoId ||
 
-                        item.ReferenciaID ===
-                        jogo.jogoId
+                            item.ReferenciaID ===
+                            jogo.jogoId
 
-                    );
+                        );
 
                     }
                 );
-                console.log(
-                    "Palpite encontrado para",
-                        jogo.jogoId,
-                        ":",
-                        palpite
-                );
+
+
+            console.log(
+                "Palpite encontrado para",
+                jogo.jogoId,
+                ":",
+                palpite
+            );
+
+
+            /*
+             * ========================================================
+             * VALORES INICIAIS
+             * ========================================================
+             */
 
             const golsMandante =
                 palpite
@@ -760,6 +779,30 @@ function renderizarJogos(
                     ? palpite.GolsVisitante
                     : "";
 
+
+            /*
+             * ========================================================
+             * STATUS INICIAL
+             * ========================================================
+             */
+
+            const statusInicial =
+                palpite
+                    ? "salvo"
+                    : "vazio";
+
+
+            const textoStatusInicial =
+                palpite
+                    ? "Palpite salvo"
+                    : "Palpite não informado";
+
+
+            /*
+             * ========================================================
+             * CRIA CARD
+             * ========================================================
+             */
 
             const card =
                 document.createElement(
@@ -857,6 +900,16 @@ function renderizarJogos(
                 </div>
 
 
+                <div
+                    class="status-palpite"
+                    data-status="${statusInicial}"
+                >
+
+                    ${textoStatusInicial}
+
+                </div>
+
+
                 <button
 
                     class="btn-salvar-palpite"
@@ -876,26 +929,159 @@ function renderizarJogos(
                 card
             );
 
+
+            /*
+             * ========================================================
+             * LOCALIZA ELEMENTOS DO CARD
+             * ========================================================
+             */
+
+            const inputMandante =
+                card.querySelector(
+                    '[data-campo="mandante"]'
+                );
+
+
+            const inputVisitante =
+                card.querySelector(
+                    '[data-campo="visitante"]'
+                );
+
+
+            const status =
+                card.querySelector(
+                    ".status-palpite"
+                );
+
+
             const botaoSalvar =
-            card.querySelector(
-                ".btn-salvar-palpite"
+                card.querySelector(
+                    ".btn-salvar-palpite"
+                );
+
+
+            /*
+             * ========================================================
+             * ATUALIZA STATUS APÓS ALTERAÇÃO
+             * ========================================================
+             */
+
+            function atualizarStatus() {
+
+
+                const valorMandante =
+                    inputMandante.value;
+
+
+                const valorVisitante =
+                    inputVisitante.value;
+
+
+                /*
+                 * PALPITE NÃO INFORMADO
+                 */
+
+                if (
+
+                    valorMandante === "" &&
+
+                    valorVisitante === ""
+
+                ) {
+
+                    status.textContent =
+                        "Palpite não informado";
+
+
+                    status.dataset.status =
+                        "vazio";
+
+
+                    return;
+
+                }
+
+
+                /*
+                 * PLACAR INCOMPLETO
+                 */
+
+                if (
+
+                    valorMandante === "" ||
+
+                    valorVisitante === ""
+
+                ) {
+
+                    status.textContent =
+                        "Placar incompleto";
+
+
+                    status.dataset.status =
+                        "alterado";
+
+
+                    return;
+
+                }
+
+
+                /*
+                 * ALTERAÇÕES NÃO SALVAS
+                 */
+
+                status.textContent =
+                    "Alterações não salvas";
+
+
+                status.dataset.status =
+                    "alterado";
+
+            }
+
+
+            /*
+             * ========================================================
+             * EVENTOS DOS CAMPOS
+             * ========================================================
+             */
+
+            inputMandante.addEventListener(
+                "input",
+                atualizarStatus
             );
+
+
+            inputVisitante.addEventListener(
+                "input",
+                atualizarStatus
+            );
+
+
+            /*
+             * ========================================================
+             * EVENTO DO BOTÃO
+             * ========================================================
+             */
 
             botaoSalvar.addEventListener(
                 "click",
                 function() {
 
+
                     console.log(
-                    "Clique detectado no botão:",
-                    jogo.jogoId
+                        "Clique detectado no botão:",
+                        jogo.jogoId
                     );
 
-                salvarPalpite(
-                    jogo.jogoId
-                );
 
-            }
-        );
+                    salvarPalpite(
+                        jogo.jogoId
+                    );
+
+                }
+            );
 
         }
     );
@@ -1265,5 +1451,131 @@ function atualizarTitulos() {
             textoCompleto;
 
     }
+
+}
+function atualizarStatusPalpite(
+    jogoId
+) {
+
+    const card =
+        document.querySelector(
+            `.card-jogo[data-jogo-id="${jogoId}"]`
+        );
+
+
+    if (
+        !card
+    ) {
+
+        return;
+
+    }
+
+
+    const status =
+        card.querySelector(
+            ".status-palpite"
+        );
+
+
+    if (
+        !status
+    ) {
+
+        return;
+
+    }
+
+
+    const inputMandante =
+        card.querySelector(
+            '[data-campo="mandante"]'
+        );
+
+
+    const inputVisitante =
+        card.querySelector(
+            '[data-campo="visitante"]'
+        );
+
+
+    if (
+        !inputMandante ||
+        !inputVisitante
+    ) {
+
+        return;
+
+    }
+
+
+    const golsMandante =
+        inputMandante.value;
+
+
+    const golsVisitante =
+        inputVisitante.value;
+
+
+    /*
+     * ============================================================
+     * PALPITE NÃO INFORMADO
+     * ============================================================
+     */
+
+    if (
+        golsMandante === "" &&
+        golsVisitante === ""
+    ) {
+
+        status.textContent =
+            "Palpite não informado";
+
+
+        status.dataset.status =
+            "vazio";
+
+
+        return;
+
+    }
+
+
+    /*
+     * ============================================================
+     * PALPITE INCOMPLETO
+     * ============================================================
+     */
+
+    if (
+        golsMandante === "" ||
+        golsVisitante === ""
+    ) {
+
+        status.textContent =
+            "Placar incompleto";
+
+
+        status.dataset.status =
+            "alterado";
+
+
+        return;
+
+    }
+
+
+    /*
+     * ============================================================
+     * QUALQUER ALTERAÇÃO
+     * ============================================================
+     */
+
+    status.textContent =
+        "Alterações não salvas";
+
+
+    status.dataset.status =
+        "alterado";
 
 }
