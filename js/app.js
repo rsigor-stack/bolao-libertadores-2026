@@ -339,7 +339,11 @@ document.addEventListener(
     "click",
     function(event) {
 
-
+        console.log(
+            "Clique detectado:",
+            event.target
+        );
+        
         if (
             event.target.id ===
             "btn-login"
@@ -369,6 +373,23 @@ document.addEventListener(
 
             alternarSecao(
                 event.target.dataset.tela
+            );
+
+        }
+
+
+        const botaoSalvar =
+            event.target.closest(
+                ".btn-salvar-palpite"
+            );
+
+
+        if (
+            botaoSalvar
+        ) {
+
+            salvarPalpite(
+                botaoSalvar.dataset.jogoId
             );
 
         }
