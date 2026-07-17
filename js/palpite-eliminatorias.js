@@ -377,7 +377,7 @@ function carregarPalpitesExistentes() {
         });
         console.log(
             "Scores depois:",
-            structuredClone(state.scores)
+            structuredClone(state.scores))
 }
 
 // ============================================================================
