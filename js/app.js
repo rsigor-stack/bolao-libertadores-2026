@@ -244,6 +244,7 @@ async function realizarLogin() {
         App.sessao =
             resposta.data;
 
+        atualizarTituloPagina();
 
         console.log(
 
@@ -299,6 +300,7 @@ function realizarLogout() {
     App.sessao =
         null;
 
+    atualizarTituloPagina();
 
     localStorage.removeItem(
         "bolao_libertadores_session"
@@ -557,7 +559,8 @@ async function restaurarSessao() {
             App.sessao
         );
 
-
+        atualizarTituloPagina();
+        
         mostrarTelaPrincipal();
 
         await carregarDadosAplicacao();
@@ -1199,5 +1202,26 @@ async function salvarPalpite(
         }
 
     }
+
+}
+
+function atualizarTituloPagina() {
+
+    if (
+        App.sessao &&
+        App.sessao.participante
+    ) {
+
+        document.title =
+            "Bolão Libertadores 2026 - " +
+            App.sessao.participante;
+
+        return;
+
+    }
+
+
+    document.title =
+        "Bolão Libertadores 2026";
 
 }
