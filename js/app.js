@@ -873,9 +873,15 @@ function renderizarJogos(
     );
 
 }
-function salvarPalpite(
+async function salvarPalpite(
     jogoId
 ) {
+
+    console.log(
+        "Iniciando salvamento:",
+        jogoId
+    );
+
 
     const card =
         document.querySelector(
@@ -916,6 +922,21 @@ function salvarPalpite(
         );
 
 
+    if (
+        !inputMandante ||
+        !inputVisitante
+    ) {
+
+        console.error(
+            "Campos de gols não encontrados."
+        );
+
+
+        return;
+
+    }
+
+
     const golsMandante =
         inputMandante.value;
 
@@ -924,17 +945,82 @@ function salvarPalpite(
         inputVisitante.value;
 
 
-    console.log(
-        "Salvando palpite:",
+    if (
+        golsMandante === "" ||
+        golsVisitante === ""
+    ) {
+
+        alert(
+            "Informe o placar completo."
+        );
+
+
+        return;
+
+    }
+
+
+    const jogo =
+        App.jogos.find(
+
+            function(
+                item
+            ) {
+
+                return (
+
+                    item.jogoId ===
+                    jogoId
+
+                );
+
+            }
+
+        );
+
+
+    if (
+        !jogo
+    ) {
+
+        console.error(
+            "Jogo não encontrado:",
+            jogoId
+        );
+
+
+        return;
+
+    }
+
+
+    const dados =
         {
 
-            jogoId,
+            jogoId:
 
-            golsMandante,
+                jogo.jogoId,
 
-            golsVisitante
 
-        }
+            golsMandante:
+
+                Number(
+                    golsMandante
+                ),
+
+
+            golsVisitante:
+
+                Number(
+                    golsVisitante
+                )
+
+        };
+
+
+    console.log(
+        "Dados do palpite:",
+        dados
     );
 
 }
