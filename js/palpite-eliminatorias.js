@@ -133,11 +133,17 @@ function aguardarConfrontos() {
 
         ) {
 
+            console.log("Aguardando carregamento do App");
             clearInterval(timer);
 
-            inicializarConfrontos();
+            const inicializado =
+                inicializarConfrontos();
 
-            iniciarPagina();
+            if (inicializado) {
+
+                init();
+
+            }
 
         }
 
@@ -1915,7 +1921,6 @@ function configurarEventos() {
 function init() {
 
     configurarEventos();
-    aguardarConfrontos();
     renderOitavas();
 
 }
