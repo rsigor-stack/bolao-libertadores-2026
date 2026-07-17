@@ -744,13 +744,13 @@ function renderizarJogos(
 
             const golsMandante =
                 palpite
-                    ? palpite.golsMandante
+                    ? palpite.GolsMandante
                     : "";
 
 
             const golsVisitante =
                 palpite
-                    ? palpite.golsVisitante
+                    ? palpite.GolsVisitante
                     : "";
 
 
