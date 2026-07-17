@@ -372,7 +372,7 @@ function carregarPalpitesExistentes() {
 
             }
 
-        );
+        ;
             
         });
         console.log(
