@@ -589,3 +589,68 @@ async function apiListarPalpites() {
     }
 
 }
+async function apiSalvarPalpite(
+    dados
+) {
+
+    console.log(
+        "Enviando palpite para a API:",
+        dados
+    );
+
+
+    const sessao =
+        App.sessao;
+
+
+    if (
+        !sessao ||
+        !sessao.token
+    ) {
+
+        throw new Error(
+            "Sessão não disponível."
+        );
+
+    }
+
+
+    const resultado =
+        await apiRequest(
+
+            "salvarPalpite",
+
+            {
+
+                method: "POST",
+
+                body: {
+
+                    token:
+                        sessao.token,
+
+                    jogoId:
+                        dados.jogoId,
+
+                    golsMandante:
+                        dados.golsMandante,
+
+                    golsVisitante:
+                        dados.golsVisitante
+
+                }
+
+            }
+
+        );
+
+
+    console.log(
+        "Resposta do salvamento:",
+        resultado
+    );
+
+
+    return resultado;
+
+}
