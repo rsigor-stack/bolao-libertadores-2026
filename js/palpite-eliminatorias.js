@@ -64,7 +64,14 @@ function inicializarConfrontos() {
 
     OITAVAS = confrontos;
 
-    state.scores = criarScoresIniciais();
+
+    state.scores =
+
+        criarScoresIniciais();
+
+
+    carregarPalpitesExistentes();
+
 
     return true;
 
@@ -215,6 +222,122 @@ function criarScoresIniciais() {
     });
 
     return scores;
+
+}
+
+function carregarPalpitesExistentes() {
+
+    if (
+
+        typeof App === "undefined" ||
+
+        !Array.isArray(App.palpites)
+
+    ) {
+
+        console.warn(
+
+            "App.palpites não está disponível."
+
+        );
+
+        return;
+
+    }
+
+
+    App.palpites
+
+        .filter(palpite =>
+
+            palpite.Fase === "Oitavas" &&
+
+            palpite.TipoPalpite === "PLACAR"
+
+        )
+
+        .forEach(palpite => {
+
+            const referencia =
+
+                palpite.ReferenciaID;
+
+
+            if (!referencia) {
+
+                return;
+
+            }
+
+
+            const partes =
+
+                referencia.split("-");
+
+
+            const confrontoId =
+
+                `${partes[0]}-${partes[1]}`;
+
+
+            const jogo =
+
+                state.scores[confrontoId];
+
+
+            if (!jogo) {
+
+                return;
+
+            }
+
+
+            const golsMandante =
+
+                palpite.GolsMandante ?? "";
+
+
+            const golsVisitante =
+
+                palpite.GolsVisitante ?? "";
+
+
+            if (
+
+                referencia.endsWith("-J1")
+
+            ) {
+
+                jogo.idaCasa =
+
+                    String(golsMandante);
+
+
+                jogo.idaFora =
+
+                    String(golsVisitante);
+
+            }
+
+
+            if (
+
+                referencia.endsWith("-J2")
+
+            ) {
+
+                jogo.voltaCasa =
+
+                    String(golsMandante);
+
+
+                jogo.voltaFora =
+
+                    String(golsVisitante);
+
+            }
+
+        });
 
 }
 
