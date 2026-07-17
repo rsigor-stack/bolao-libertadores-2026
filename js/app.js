@@ -2989,3 +2989,30 @@ function gerarPalpiteClassificadoSeguinte(
     };
 
 }
+function encontrarConfronto(
+    confrontoId
+) {
+
+    return App.confrontos.find(
+        function(
+            confronto
+        ) {
+
+            return (
+
+                String(
+                    confronto.ConfrontoID
+                ).trim()
+
+                ===
+
+                String(
+                    confrontoId
+                ).trim()
+
+            );
+
+        }
+    );
+
+}
