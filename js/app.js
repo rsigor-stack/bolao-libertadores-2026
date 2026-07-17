@@ -2274,20 +2274,21 @@ function determinarClassificadoConfronto(
 
 
     const jogos =
-        App.jogos.filter(
-            function(
-                jogo
-            ) {
+        App.jogos
+            .filter(
+                function(
+                    jogo
+                ) {
 
-                return (
+                    return (
 
-                    jogo.confrontoId ===
-                    confronto.ConfrontoID
+                        jogo.confrontoId ===
+                        confronto.ConfrontoID
 
-                );
+                    );
 
-            }
-        );
+                }
+            );
 
 
     if (
@@ -2331,31 +2332,60 @@ function determinarClassificadoConfronto(
         ) {
 
 
-            const palpite =
-                App.palpites.find(
-                    function(
-                        item
-                    ) {
-
-                        return (
-
-                            item.referenciaId ===
-                            jogo.jogoId ||
-
-                            item.referenciaID ===
-                            jogo.jogoId ||
-
-                            item.ReferenciaID ===
-                            jogo.jogoId
-
-                        );
-
-                    }
+            const card =
+                document.querySelector(
+                    `.card-jogo[data-jogo-id="${jogo.jogoId}"]`
                 );
 
 
             if (
-                !palpite
+                !card
+            ) {
+
+                return;
+
+            }
+
+
+            const inputMandante =
+                card.querySelector(
+                    '[data-campo="mandante"]'
+                );
+
+
+            const inputVisitante =
+                card.querySelector(
+                    '[data-campo="visitante"]'
+                );
+
+
+            if (
+
+                !inputMandante ||
+
+                !inputVisitante
+
+            ) {
+
+                return;
+
+            }
+
+
+            const valorMandante =
+                inputMandante.value;
+
+
+            const valorVisitante =
+                inputVisitante.value;
+
+
+            if (
+
+                valorMandante === "" ||
+
+                valorVisitante === ""
+
             ) {
 
                 return;
@@ -2365,15 +2395,13 @@ function determinarClassificadoConfronto(
 
             const golsMandante =
                 Number(
-                    palpite.golsMandante ??
-                    palpite.GolsMandante
+                    valorMandante
                 );
 
 
             const golsVisitante =
                 Number(
-                    palpite.golsVisitante ??
-                    palpite.GolsVisitante
+                    valorVisitante
                 );
 
 
@@ -2469,7 +2497,10 @@ function determinarClassificadoConfronto(
                 golsTimeB,
 
             completo:
-                true
+                true,
+
+            empate:
+                false
 
         };
 
@@ -2493,7 +2524,10 @@ function determinarClassificadoConfronto(
                 golsTimeB,
 
             completo:
-                true
+                true,
+
+            empate:
+                false
 
         };
 
