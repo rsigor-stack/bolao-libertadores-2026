@@ -371,13 +371,11 @@ function carregarPalpitesExistentes() {
                     String(golsVisitante);
 
             }
-
-        ;
-            
+                  
         });
         console.log(
             "Scores depois:",
-            structuredClone(state.scores))
+            structuredClone(state.scores));
 }
 
 // ============================================================================
