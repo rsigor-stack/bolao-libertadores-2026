@@ -64,11 +64,12 @@ function inicializarConfrontos() {
 
     OITAVAS = confrontos;
 
-    scores = criarScoresIniciais();
+    state.scores = criarScoresIniciais();
 
     return true;
 
 }
+
 function aguardarConfrontos() {
 
     const timer = setInterval(() => {
@@ -216,10 +217,6 @@ function criarScoresIniciais() {
     return scores;
 
 }
-
-
-state.scores = criarScoresIniciais();
-
 
 // ============================================================================
 // UTILITÁRIOS
@@ -1880,6 +1877,6 @@ if (
 
 else {
 
-    init();
+    aguardarConfrontos();
 
 }
