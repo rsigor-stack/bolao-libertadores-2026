@@ -1184,7 +1184,16 @@ function criarCardJogo(
 
         }
     );
-
+    
+    /*
+     * ========================================================
+     * ATUALIZA CLASSIFICADO INICIAL
+     * ========================================================
+     */
+    
+    atualizarClassificadoDoConfronto(
+        jogo.confrontoId
+    );
 
     return card;
 
