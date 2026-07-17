@@ -1344,16 +1344,60 @@ async function salvarPalpite(
  * ============================================================
  */
         
-        const status =
-            card.querySelector(
-                ".status-palpite"
+const cardAtualizado =
+    document.querySelector(
+        `.card-jogo[data-jogo-id="${jogoId}"]`
+    );
+
+
+console.log(
+    "Card localizado após salvamento:",
+    cardAtualizado
+);
+
+
+if (
+    !cardAtualizado
+) {
+
+    console.error(
+        "Card não encontrado após salvamento:",
+        jogoId
+    );
+
+}
+
+
+const status =
+    cardAtualizado
+        ? cardAtualizado.querySelector(
+            ".status-palpite"
+        )
+        : null;
+
+
+        console.log(
+            "Status localizado:",
+            status
+        );
+        
+        
+        if (
+            !status
+        ) {
+        
+            console.error(
+                "Elemento .status-palpite não encontrado:",
+                jogoId
             );
+        
+        }
         
         
         if (
             status
         ) {
-            
+        
             status.textContent =
                 "Palpite salvo";
         
@@ -1361,7 +1405,13 @@ async function salvarPalpite(
             status.dataset.status =
                 "salvo";
         
-        }   
+        
+            console.log(
+                "Status atualizado com sucesso:",
+                jogoId
+            );
+        
+        }  
 
 
 /*
