@@ -154,6 +154,18 @@ async function apiLogin(
     senha
 ) {
 
+
+    Logger.log(
+    "PARAMETROS RECEBIDOS:"
+  );
+
+  Logger.log(
+    JSON.stringify(
+      e.parameter
+    )
+  );
+
+  
     console.log(
         "Enviando login:",
         {
