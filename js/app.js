@@ -2219,28 +2219,76 @@ function renderizarConfrontosOitavas() {
                 </div>
 
 
+            <div
+                class="classificado-confronto"
+            >
+            
                 <div
-                    class="classificado-confronto"
+                    class="classificado-automatico"
                 >
-                
+            
                     <span>
                         Classificado:
                     </span>
-                
-                
+            
+            
                     <strong>
-                
-                        ${
-                            resultadoConfronto.classificado
-                                ? resultadoConfronto.classificado
-                                : resultadoConfronto.empate
-                                    ? "Empate — definição pendente"
-                                    : "A definir"
-                        }
-                
+                        A definir
                     </strong>
-                
+            
                 </div>
+            
+            
+                <div
+                    class="selecao-classificado"
+                    hidden
+                >
+            
+                    <span>
+                        Escolha quem avança:
+                    </span>
+            
+            
+                    <label>
+            
+                        <input
+            
+                            type="radio"
+            
+                            name="classificado-${confronto.ConfrontoID}"
+            
+                            value="${confronto.TimeA}"
+            
+                            data-classificado-time="${confronto.TimeA}"
+            
+                        >
+            
+                        ${confronto.TimeA}
+            
+                    </label>
+            
+            
+                    <label>
+            
+                        <input
+            
+                            type="radio"
+            
+                            name="classificado-${confronto.ConfrontoID}"
+            
+                            value="${confronto.TimeB}"
+            
+                            data-classificado-time="${confronto.TimeB}"
+            
+                        >
+            
+                        ${confronto.TimeB}
+            
+                    </label>
+            
+                </div>
+            
+            </div>
 
             `;
 
@@ -2251,6 +2299,37 @@ function renderizarConfrontosOitavas() {
                 );
 
 
+
+            const opcoesClassificado =
+                cardConfronto.querySelectorAll(
+                    'input[data-classificado-time]'
+                );
+            
+            
+            opcoesClassificado.forEach(
+                function(
+                    opcao
+                ) {
+            
+                    opcao.addEventListener(
+                        "change",
+                        function() {
+            
+                            console.log(
+                                "Classificado selecionado:",
+                                confronto.ConfrontoID,
+                                this.value
+                            );
+            
+                        }
+                    );
+            
+                }
+            );
+
+            
+            
+            
             /*
              * ====================================================
              * INSERE OS DOIS JOGOS
@@ -2622,46 +2701,85 @@ function atualizarClassificadoDoConfronto(
     }
 
 
-    const elemento =
+    const elementoAutomatico =
         cardConfronto.querySelector(
-            ".classificado-confronto strong"
+            ".classificado-automatico strong"
+        );
+
+
+    const selecaoManual =
+        cardConfronto.querySelector(
+            ".selecao-classificado"
         );
 
 
     if (
-        !elemento
+        !elementoAutomatico ||
+        !selecaoManual
     ) {
 
         return;
 
     }
 
+
+    /*
+     * ============================================================
+     * VENCEDOR AUTOMÁTICO
+     * ============================================================
+     */
 
     if (
         resultado.classificado
     ) {
 
-        elemento.textContent =
+        elementoAutomatico.textContent =
             resultado.classificado;
+
+
+        selecaoManual.hidden =
+            true;
+
 
         return;
 
     }
 
+
+    /*
+     * ============================================================
+     * EMPATE NO AGREGADO
+     * ============================================================
+     */
 
     if (
         resultado.empate
     ) {
 
-        elemento.textContent =
-            "Empate — definição pendente";
+        elementoAutomatico.textContent =
+            "Empate no agregado";
+
+
+        selecaoManual.hidden =
+            false;
+
 
         return;
 
     }
 
 
-    elemento.textContent =
+    /*
+     * ============================================================
+     * PALPITE INCOMPLETO
+     * ============================================================
+     */
+
+    elementoAutomatico.textContent =
         "A definir";
+
+
+    selecaoManual.hidden =
+        true;
 
 }
