@@ -1338,7 +1338,37 @@ async function salvarPalpite(
 
         }
 
+/*
+ * ============================================================
+ * ATUALIZA STATUS VISUAL
+ * ============================================================
+ */
+        
+        const status =
+            card.querySelector(
+                ".status-palpite"
+            );
+        
+        
+        if (
+            status
+        ) {
+            
+            status.textContent =
+                "Palpite salvo";
+        
+        
+            status.dataset.status =
+                "salvo";
+        
+        }   
 
+
+/*
+ * ============================================================
+ * SUCESSO
+ * ============================================================
+ */
         console.log(
             "Palpite salvo com sucesso:",
             resposta
