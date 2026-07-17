@@ -2138,6 +2138,11 @@ function renderizarConfrontosOitavas() {
              * ====================================================
              */
 
+            const resultadoConfronto =
+                determinarClassificadoConfronto(
+                    confronto
+                );
+            
             const cardConfronto =
                 document.createElement(
                     "article"
@@ -2201,16 +2206,24 @@ function renderizarConfrontosOitavas() {
                 <div
                     class="classificado-confronto"
                 >
-
+                
                     <span>
                         Classificado:
                     </span>
-
-
+                
+                
                     <strong>
-                        A definir
+                
+                        ${
+                            resultadoConfronto.classificado
+                                ? resultadoConfronto.classificado
+                                : resultadoConfronto.empate
+                                    ? "Empate — definição pendente"
+                                    : "A definir"
+                        }
+                
                     </strong>
-
+                
                 </div>
 
             `;
@@ -2253,5 +2266,257 @@ function renderizarConfrontosOitavas() {
 
         }
     );
+
+}
+function determinarClassificadoConfronto(
+    confronto
+) {
+
+
+    const jogos =
+        App.jogos.filter(
+            function(
+                jogo
+            ) {
+
+                return (
+
+                    jogo.confrontoId ===
+                    confronto.ConfrontoID
+
+                );
+
+            }
+        );
+
+
+    if (
+        jogos.length === 0
+    ) {
+
+        return {
+
+            classificado:
+                null,
+
+            golsTimeA:
+                0,
+
+            golsTimeB:
+                0,
+
+            completo:
+                false
+
+        };
+
+    }
+
+
+    let golsTimeA =
+        0;
+
+
+    let golsTimeB =
+        0;
+
+
+    let jogosCompletos =
+        0;
+
+
+    jogos.forEach(
+        function(
+            jogo
+        ) {
+
+
+            const palpite =
+                App.palpites.find(
+                    function(
+                        item
+                    ) {
+
+                        return (
+
+                            item.referenciaId ===
+                            jogo.jogoId ||
+
+                            item.referenciaID ===
+                            jogo.jogoId ||
+
+                            item.ReferenciaID ===
+                            jogo.jogoId
+
+                        );
+
+                    }
+                );
+
+
+            if (
+                !palpite
+            ) {
+
+                return;
+
+            }
+
+
+            const golsMandante =
+                Number(
+                    palpite.golsMandante ??
+                    palpite.GolsMandante
+                );
+
+
+            const golsVisitante =
+                Number(
+                    palpite.golsVisitante ??
+                    palpite.GolsVisitante
+                );
+
+
+            if (
+
+                isNaN(
+                    golsMandante
+                )
+
+                ||
+
+                isNaN(
+                    golsVisitante
+                )
+
+            ) {
+
+                return;
+
+            }
+
+
+            jogosCompletos++;
+
+
+            if (
+                jogo.mandante ===
+                confronto.TimeA
+            ) {
+
+                golsTimeA +=
+                    golsMandante;
+
+
+                golsTimeB +=
+                    golsVisitante;
+
+            }
+
+            else {
+
+                golsTimeA +=
+                    golsVisitante;
+
+
+                golsTimeB +=
+                    golsMandante;
+
+            }
+
+        }
+    );
+
+
+    if (
+        jogosCompletos <
+        jogos.length
+    ) {
+
+        return {
+
+            classificado:
+                null,
+
+            golsTimeA:
+                golsTimeA,
+
+            golsTimeB:
+                golsTimeB,
+
+            completo:
+                false
+
+        };
+
+    }
+
+
+    if (
+        golsTimeA >
+        golsTimeB
+    ) {
+
+        return {
+
+            classificado:
+                confronto.TimeA,
+
+            golsTimeA:
+                golsTimeA,
+
+            golsTimeB:
+                golsTimeB,
+
+            completo:
+                true
+
+        };
+
+    }
+
+
+    if (
+        golsTimeB >
+        golsTimeA
+    ) {
+
+        return {
+
+            classificado:
+                confronto.TimeB,
+
+            golsTimeA:
+                golsTimeA,
+
+            golsTimeB:
+                golsTimeB,
+
+            completo:
+                true
+
+        };
+
+    }
+
+
+    return {
+
+        classificado:
+            null,
+
+        golsTimeA:
+            golsTimeA,
+
+        golsTimeB:
+            golsTimeB,
+
+        completo:
+            true,
+
+        empate:
+            true
+
+    };
 
 }
