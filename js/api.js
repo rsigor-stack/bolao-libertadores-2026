@@ -255,30 +255,134 @@ async function apiListarJogos() {
  * ============================================================================
  */
 
-async function apiListarPalpites(
-  participante,
-  token
-) {
+async function apiListarPalpites() {
 
-  return apiRequest(
+    console.log(
+        "Carregando palpites..."
+    );
 
-    "listarPalpites",
 
-    {
+    const sessao =
+        App.sessao;
 
-      method: "POST",
 
-      body: {
+    if (
+        !sessao ||
+        !sessao.token
+    ) {
 
-        participante,
-
-        token
-
-      }
+        throw new Error(
+            "Sessão não disponível."
+        );
 
     }
 
-  );
+
+    try {
+
+        const resultado =
+            await apiRequest(
+
+                "listarPalpites",
+
+                {
+
+                    method: "GET",
+
+                    params: {
+
+                        token:
+                            sessao.token
+
+                    }
+
+                }
+
+            );
+
+
+        console.log(
+            "Resposta original dos palpites:",
+            resultado
+        );
+
+
+        if (
+
+            resultado &&
+
+            resultado.success &&
+
+            Array.isArray(
+                resultado.data
+            )
+
+        ) {
+
+            resultado.data =
+                resultado.data.map(
+
+                    function(
+                        palpite
+                    ) {
+
+                        return {
+
+                            palpiteId:
+                                palpite.PalpiteID,
+
+                            participante:
+                                palpite.Participante,
+
+                            fase:
+                                palpite.Fase,
+
+                            tipoPalpite:
+                                palpite.TipoPalpite,
+
+                            referenciaId:
+                                palpite.ReferenciaID,
+
+                            golsMandante:
+                                palpite.GolsMandante,
+
+                            golsVisitante:
+                                palpite.GolsVisitante,
+
+                            valor:
+                                palpite.Valor
+
+                        };
+
+                    }
+
+                );
+
+        }
+
+
+        console.log(
+            "Palpites normalizados:",
+            resultado
+        );
+
+
+        return resultado;
+
+    }
+    catch (
+        erro
+    ) {
+
+        console.error(
+            "Erro ao carregar palpites:",
+            erro
+        );
+
+
+        throw erro;
+
+    }
 
 }
 
