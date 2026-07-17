@@ -29,7 +29,26 @@ const App = {
 
 document.addEventListener(
     "DOMContentLoaded",
-    iniciarAplicacao
+    function () {
+
+        console.log(
+            "Aplicação iniciada."
+        );
+
+
+        const sessaoRestaurada =
+            restaurarSessao();
+
+
+        if (
+            sessaoRestaurada
+        ) {
+
+            mostrarTelaPrincipal();
+
+        }
+
+    }
 );
 
 
@@ -468,5 +487,34 @@ function encerrarSessao() {
 
 
     window.location.reload();
+
+}
+function restaurarSessao() {
+
+    const sessao =
+        obterSessao();
+
+
+    if (
+        !sessao ||
+        !sessao.token
+    ) {
+
+        return false;
+
+    }
+
+
+    App.sessao =
+        sessao;
+
+
+    console.log(
+        "Sessão restaurada:",
+        App.sessao
+    );
+
+
+    return true;
 
 }
