@@ -3172,3 +3172,54 @@ function resolverParticipanteConfronto(
     return valor;
 
 }
+function resolverConfronto(
+    confrontoId
+) {
+
+    const confronto =
+        encontrarConfronto(
+            confrontoId
+        );
+
+
+    if (
+        !confronto
+    ) {
+
+        return null;
+
+    }
+
+
+    const timeA =
+        resolverParticipanteConfronto(
+            confronto.TimeA
+        );
+
+
+    const timeB =
+        resolverParticipanteConfronto(
+            confronto.TimeB
+        );
+
+
+    return {
+
+        confrontoId:
+            confronto.ConfrontoID,
+
+        fase:
+            confronto.Fase,
+
+        ordem:
+            confronto.Ordem,
+
+        timeA:
+            timeA,
+
+        timeB:
+            timeB
+
+    };
+
+}
