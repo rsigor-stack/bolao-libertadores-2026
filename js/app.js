@@ -607,6 +607,13 @@ async function carregarDadosAplicacao() {
 
     try {
 
+
+        /*
+         * ============================================================
+         * CARREGA JOGOS
+         * ============================================================
+         */
+
         const respostaJogos =
             await apiListarJogos();
 
@@ -637,6 +644,48 @@ async function carregarDadosAplicacao() {
         );
 
 
+        /*
+         * ============================================================
+         * CARREGA CONFRONTOS
+         * ============================================================
+         */
+
+        const respostaConfrontos =
+            await apiListarConfrontos();
+
+
+        if (
+            !respostaConfrontos ||
+            !respostaConfrontos.success
+        ) {
+
+            console.error(
+                "Falha ao carregar confrontos:",
+                respostaConfrontos
+            );
+
+
+            return;
+
+        }
+
+
+        App.confrontos =
+            respostaConfrontos.data;
+
+
+        console.log(
+            "Confrontos carregados:",
+            App.confrontos
+        );
+
+
+        /*
+         * ============================================================
+         * CARREGA PALPITES
+         * ============================================================
+         */
+
         const respostaPalpites =
             await apiListarPalpites();
 
@@ -663,9 +712,15 @@ async function carregarDadosAplicacao() {
 
         console.log(
             "Palpites carregados:",
-        App.palpites
+            App.palpites
         );
 
+
+        /*
+         * ============================================================
+         * RENDERIZA JOGOS
+         * ============================================================
+         */
 
         renderizarJogos(
             App.jogos
@@ -673,6 +728,8 @@ async function carregarDadosAplicacao() {
 
 
     }
+
+
     catch (
         erro
     ) {
