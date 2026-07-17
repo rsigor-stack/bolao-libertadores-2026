@@ -77,29 +77,49 @@ function inicializarConfrontos() {
 
 }
 
-function aguardarConfrontos() {
+function aguardarDados() {
 
     const timer = setInterval(() => {
 
-        if (
+        const confrontosCarregados =
 
             typeof App !== "undefined" &&
 
             Array.isArray(App.confrontos) &&
 
-            App.confrontos.length >= 15
+            App.confrontos.length >= 15;
+
+
+        const palpitesCarregados =
+
+            typeof App !== "undefined" &&
+
+            Array.isArray(App.palpites);
+
+
+        if (
+
+            confrontosCarregados &&
+
+            palpitesCarregados
 
         ) {
 
-            console.log("Aguardando carregamento do App");
+            console.log(
+                "Confrontos e palpites carregados."
+            );
+
+
             clearInterval(timer);
 
+
             const inicializado =
+
                 inicializarConfrontos();
 
+
             if (inicializado) {
-                
-                carregarPalpitesExistentes();
+
                 init();
 
             }
@@ -228,7 +248,19 @@ function criarScoresIniciais() {
 
 function carregarPalpitesExistentes() {
     
-    console.log("Executando Carregamento de Palpites");
+        console.log(
+        "Executando Carregamento de Palpites"
+    );
+    
+    console.log(
+        "Quantidade de palpites:",
+        App.palpites?.length
+    );
+    
+    console.log(
+        "Scores antes:",
+        structuredClone(state.scores)
+    );
     
     if (
 
@@ -340,6 +372,11 @@ function carregarPalpitesExistentes() {
 
             }
 
+        console.log(
+            "Scores depois:",
+            structuredClone(state.scores)
+        );
+            
         });
 
 }
@@ -1995,7 +2032,7 @@ if (
 
         "DOMContentLoaded",
 
-        aguardarConfrontos
+        aguardarDados
 
     );
 
@@ -2003,6 +2040,6 @@ if (
 
 else {
 
-    aguardarConfrontos();
+    aguardarDados();
 
 }
