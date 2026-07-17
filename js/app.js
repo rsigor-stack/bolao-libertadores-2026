@@ -191,7 +191,36 @@ async function realizarLogin() {
             return;
 
         }
+        if (
+            respósta.success
+            ) {
+    
+            const sessao = {
 
+            token:
+                resultado.data.token,
+    
+            participante:
+                participante
+    
+        };
+
+
+        localStorage.setItem(
+
+            "bolao_libertadores_session",
+    
+            JSON.stringify(
+                sessao
+            )
+    
+        );
+        
+        
+        console.log(
+            "Sessão salva:",
+            sessao
+        );
 
         App.sessao =
             resposta.data;
@@ -374,5 +403,59 @@ function alternarSecao(
 
         }
     );
+
+}
+function obterSessao() {
+
+    const dados =
+        localStorage.getItem(
+            "bolao_libertadores_session"
+        );
+
+
+    if (
+        !dados
+    ) {
+
+        return null;
+
+    }
+
+
+    try {
+
+        return JSON.parse(
+            dados
+        );
+
+    }
+    catch (
+        erro
+    ) {
+
+        console.error(
+            "Sessão inválida:",
+            erro
+        );
+
+
+        localStorage.removeItem(
+            "bolao_libertadores_session"
+        );
+
+
+        return null;
+
+    }
+
+}
+function encerrarSessao() {
+
+    localStorage.removeItem(
+        "bolao_libertadores_session"
+    );
+
+
+    window.location.reload();
 
 }
