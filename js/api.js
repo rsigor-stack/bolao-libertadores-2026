@@ -739,3 +739,47 @@ async function apiListarConfrontos() {
     );
 
 }
+async function apiListarConfrontos() {
+
+    console.log(
+        "Carregando confrontos..."
+    );
+
+
+    const token =
+        App.sessao &&
+        App.sessao.token
+            ? App.sessao.token
+            : "";
+
+
+    const url =
+        API_URL +
+        "?action=listarConfrontos" +
+        "&token=" +
+        encodeURIComponent(
+            token
+        );
+
+
+    const resposta =
+        await fetch(
+            url
+        );
+
+
+    const texto =
+        await resposta.text();
+
+
+    console.log(
+        "Confrontos recebidos:",
+        texto
+    );
+
+
+    return JSON.parse(
+        texto
+    );
+
+}
