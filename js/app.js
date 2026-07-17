@@ -244,9 +244,10 @@ async function realizarLogin() {
         App.sessao =
             resposta.data;
 
-        atualizarTituloPagina();
+        App.sessao =
+    resposta.data;
 
-        atualizarTituloAplicacao();
+    atualizarTitulos();
 
         console.log(
 
@@ -302,9 +303,7 @@ function realizarLogout() {
     App.sessao =
         null;
 
-    atualizarTituloPagina();
-
-    atualizarTituloAplicacao();
+    atualizarTitulos();
 
     localStorage.removeItem(
         "bolao_libertadores_session"
@@ -563,9 +562,7 @@ async function restaurarSessao() {
             App.sessao
         );
 
-        atualizarTituloPagina();
-        
-        mostrarTelaPrincipal();
+        atualizarTitulos();
 
         await carregarDadosAplicacao();
 
@@ -1209,58 +1206,64 @@ async function salvarPalpite(
 
 }
 
-function atualizarTituloPagina() {
+function atualizarTitulos() {
+
+    let nome =
+        "";
+
 
     if (
         App.sessao &&
         App.sessao.participante
     ) {
 
-        document.title =
-            "Bolão Libertadores 2026 - " +
+        nome =
             App.sessao.participante;
-
-        return;
 
     }
 
 
-    document.title =
-        "Bolão Libertadores 2026";
+    const tituloNavegador =
+        document.getElementById(
+            "titulo-aplicacao"
+        );
 
-}
-function atualizarTituloAplicacao() {
 
-    const titulo =
+    const tituloPagina =
         document.getElementById(
             "titulo-pagina"
         );
 
 
-    if (
-        !titulo
-    ) {
-
-        return;
-
-    }
-
-
-    if (
-        App.sessao &&
-        App.sessao.participante
-    ) {
-
-        titulo.textContent =
-            "Bolão Libertadores 2026 - " +
-            App.sessao.participante;
-
-        return;
-
-    }
-
-
-    titulo.textContent =
+    const textoBase =
         "Bolão Libertadores 2026";
+
+
+    const textoCompleto =
+        nome
+            ? textoBase +
+              " - " +
+              nome
+            : textoBase;
+
+
+    if (
+        tituloNavegador
+    ) {
+
+        document.title =
+            textoCompleto;
+
+    }
+
+
+    if (
+        tituloPagina
+    ) {
+
+        tituloPagina.textContent =
+            textoCompleto;
+
+    }
 
 }
