@@ -16,69 +16,129 @@ const API_URL =
  */
 
 async function apiRequest(
-  action,
-  options = {}
+    action,
+    options = {}
 ) {
 
-  const {
+    const {
 
-    method = "GET",
+        method = "GET",
 
-    body = null
+        body = null
 
-  } = options;
-
-
-  let url =
-    API_URL +
-    "?action=" +
-    encodeURIComponent(action);
+    } = options;
 
 
-  const config = {
+    let url =
+        API_URL +
+        "?action=" +
+        encodeURIComponent(action);
 
-    method,
 
-    headers: {
+    const config = {
 
-      "Content-Type":
-        "application/json"
+        method
+
+    };
+
+
+    /*
+     * GET
+     */
+
+    if (
+        method === "GET"
+    ) {
+
+        if (body) {
+
+            Object.entries(
+                body
+            ).forEach(
+                function([
+                    chave,
+                    valor
+                ]) {
+
+                    url +=
+                        "&" +
+                        encodeURIComponent(
+                            chave
+                        ) +
+                        "=" +
+                        encodeURIComponent(
+                            valor
+                        );
+
+                }
+            );
+
+        }
 
     }
 
-  };
+
+    /*
+     * POST
+     */
+
+    if (
+        method === "POST"
+    ) {
+
+        config.body =
+            new URLSearchParams(
+                body
+            );
+
+    }
 
 
-  if (body) {
+    const response =
+        await fetch(
+            url,
+            config
+        );
 
-    config.body =
-      JSON.stringify(body);
 
-  }
+    if (
+        !response.ok
+    ) {
+
+        throw new Error(
+
+            "Erro HTTP " +
+            response.status
+
+        );
+
+    }
 
 
-  const response =
-    await fetch(
-      url,
-      config
+    const texto =
+        await response.text();
+
+
+    console.log(
+        "Resposta recebida:",
+        texto
     );
 
 
-  if (!response.ok) {
+    try {
 
-    throw new Error(
-      "Erro HTTP " +
-      response.status
-    );
+        return JSON.parse(
+            texto
+        );
 
-  }
+    }
+    catch (erro) {
 
+        throw new Error(
+            "Resposta inválida da API."
+        );
 
-  const data =
-    await response.json();
-
-
-  return data;
+    }
 
 }
 
