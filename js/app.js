@@ -1754,11 +1754,11 @@ async function salvarTodosPalpites() {
 
     /*
      * ============================================================
-     * PREPARA OS SALVAMENTOS
+     * MONTA O LOTE
      * ============================================================
      */
 
-    const promessas =
+    const palpites =
         cardsAlterados.map(
             function(card) {
 
@@ -1766,74 +1766,157 @@ async function salvarTodosPalpites() {
                     card.dataset.jogoId;
 
 
-                console.log(
-                    "Salvando palpite:",
-                    jogoId
-                );
+                const inputMandante =
+                    card.querySelector(
+                        '[data-campo="mandante"]'
+                    );
 
 
-                return salvarPalpite(
-                    jogoId,
-                    false
-                );
+                const inputVisitante =
+                    card.querySelector(
+                        '[data-campo="visitante"]'
+                    );
+
+
+                return {
+
+                    jogoId:
+                        jogoId,
+
+                    golsMandante:
+                        Number(
+                            inputMandante.value
+                        ),
+
+                    golsVisitante:
+                        Number(
+                            inputVisitante.value
+                        )
+
+                };
 
             }
         );
 
 
-    /*
-     * ============================================================
-     * EXECUTA TODOS OS SALVAMENTOS EM PARALELO
-     * ============================================================
-     */
+    console.log(
+        "Palpites enviados em lote:",
+        palpites
+    );
 
-    const resultados =
-        await Promise.all(
-            promessas
+
+    try {
+
+
+        /*
+         * ========================================================
+         * UMA ÚNICA REQUISIÇÃO HTTP
+         * ========================================================
+         */
+
+        const resposta =
+            await apiSalvarPalpitesLote(
+                palpites
+            );
+
+
+        if (
+            !resposta ||
+            !resposta.success
+        ) {
+
+            console.error(
+                "Falha ao salvar lote:",
+                resposta
+            );
+
+
+            alert(
+
+                resposta?.message ||
+
+                "Não foi possível salvar os palpites."
+
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+         * ========================================================
+         * ATUALIZA STATUS VISUAL
+         * ========================================================
+         */
+
+        cardsAlterados.forEach(
+            function(card) {
+
+                const status =
+                    card.querySelector(
+                        ".status-palpite"
+                    );
+
+
+                if (
+                    status
+                ) {
+
+                    status.textContent =
+                        "Palpite salvo";
+
+
+                    status.dataset.status =
+                        "salvo";
+
+                }
+
+            }
         );
 
 
-    /*
-     * ============================================================
-     * CONTABILIZA SUCESSOS
-     * ============================================================
-     */
+        const quantidade =
+            resposta.data &&
+            resposta.data.quantidade
+                ? resposta.data.quantidade
+                : palpites.length;
 
-    const quantidadeSalva =
-        resultados.filter(
-            function(sucesso) {
-
-                return sucesso === true;
-
-            }
-        ).length;
-
-
-    /*
-     * ============================================================
-     * MENSAGEM FINAL
-     * ============================================================
-     */
-
-    if (
-        quantidadeSalva > 0
-    ) {
 
         alert(
 
-            quantidadeSalva === 1
+            quantidade === 1
 
                 ? "1 palpite salvo com sucesso."
 
-                : `${quantidadeSalva} palpites salvos com sucesso.`
+                : `${quantidade} palpites salvos com sucesso.`
 
+        );
+
+
+        console.log(
+            "Processo de salvamento em lote concluído:",
+            resposta
         );
 
     }
 
 
-    console.log(
-        "Processo de salvamento concluído."
-    );
+    catch (
+        erro
+    ) {
+
+        console.error(
+            "Erro ao salvar lote:",
+            erro
+        );
+
+
+        alert(
+            "Não foi possível salvar os palpites."
+        );
+
+    }
 
 }
