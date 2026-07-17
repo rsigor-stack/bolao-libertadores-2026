@@ -3016,3 +3016,54 @@ function encontrarConfronto(
     );
 
 }
+function encontrarPalpiteClassificado(
+    confrontoId
+) {
+
+    return App.palpites.find(
+        function(
+            palpite
+        ) {
+
+            const referenciaId =
+                palpite.referenciaId
+                ??
+                palpite.referenciaID
+                ??
+                palpite.ReferenciaID;
+
+
+            const tipoPalpite =
+                palpite.tipoPalpite
+                ??
+                palpite.TipoPalpite;
+
+
+            return (
+
+                String(
+                    referenciaId
+                ).trim()
+
+                ===
+
+                String(
+                    confrontoId
+                ).trim()
+
+                &&
+
+                String(
+                    tipoPalpite
+                ).trim().toUpperCase()
+
+                ===
+
+                "CLASSIFICADO"
+
+            );
+
+        }
+    );
+
+}
