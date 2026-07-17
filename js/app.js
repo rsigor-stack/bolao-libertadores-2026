@@ -1096,7 +1096,8 @@ function renderizarJogos(
 
 }
 async function salvarPalpite(
-    jogoId
+    jogoId,
+    mostrarMensagem = true
 ) {
 
     console.log(
@@ -1335,14 +1336,19 @@ async function salvarPalpite(
                 resposta
             );
 
-
-            alert(
-                resposta?.message ||
-                "Não foi possível salvar o palpite."
-            );
-
-
-            return;
+            if (
+                    mostrarMensagem
+                ) {
+            
+                    alert(
+                        resposta?.message ||
+                        "Não foi possível salvar o palpite."
+                    );
+            
+                }
+            
+            
+                return false;
 
         }
 
@@ -1433,10 +1439,22 @@ const status =
         );
 
 
-        alert(
-            "Palpite salvo com sucesso."
+        console.log(
+            "Palpite salvo com sucesso:",
+            resposta
         );
-
+        
+        
+        if (
+            mostrarMensagem
+        ) {
+        
+            alert(
+                "Palpite salvo com sucesso."
+            );
+        
+        }
+        return true;
 
     }
 
@@ -1451,9 +1469,18 @@ const status =
         );
 
 
-        alert(
-            "Não foi possível salvar o palpite."
-        );
+        if (
+            mostrarMensagem
+        ) {
+        
+            alert(
+                "Não foi possível salvar o palpite."
+            );
+        
+        }
+        
+        
+        return false;
 
     }
 
@@ -1724,28 +1751,54 @@ async function salvarTodosPalpites() {
 
     }
 
+    let quantidadeSalva =  0;
 
     for (
         const card
         of cardsAlterados
     ) {
-
+    
         const jogoId =
             card.dataset.jogoId;
-
-
+    
+    
         console.log(
             "Salvando palpite:",
             jogoId
         );
-
-
-        await salvarPalpite(
-            jogoId
-        );
-
+    
+    
+        const sucesso =
+            await salvarPalpite(
+                jogoId,
+                false
+            );
+    
+    
+        if (
+            sucesso
+        ) {
+    
+            quantidadeSalva++;
+    
+        }
+    
     }
-
+    if (
+        quantidadeSalva > 0
+    ) {
+    
+        alert(
+    
+            quantidadeSalva === 1
+    
+                ? "1 palpite salvo com sucesso."
+    
+                : `${quantidadeSalva} palpites salvos com sucesso.`
+    
+        );
+    
+    }
 
     console.log(
         "Processo de salvamento concluído."
