@@ -2383,7 +2383,7 @@ if (
 }
 
 else {
-
+    recuperarEstadoAplicacao();
     aguardarConfrontos();
 
 }
@@ -2447,6 +2447,89 @@ function recuperarContextoEliminatorias() {
         console.error(
 
             "Erro ao recuperar contexto das eliminatórias:",
+
+            erro
+
+        );
+
+
+        return false;
+
+    }
+
+}
+function recuperarEstadoAplicacao() {
+
+    const dados =
+        sessionStorage.getItem(
+            "estadoAplicacao"
+        );
+
+
+    if (
+        !dados
+    ) {
+
+        console.warn(
+            "Estado da aplicação não encontrado."
+        );
+
+
+        return false;
+
+    }
+
+
+    try {
+
+        const estado =
+            JSON.parse(
+                dados
+            );
+
+
+        App.jogos =
+            Array.isArray(
+                estado.jogos
+            )
+
+                ? estado.jogos
+
+                : [];
+
+
+        App.confrontos =
+            Array.isArray(
+                estado.confrontos
+            )
+
+                ? estado.confrontos
+
+                : [];
+
+
+        App.palpites =
+            Array.isArray(
+                estado.palpites
+            )
+
+                ? estado.palpites
+
+                : [];
+
+
+        return true;
+
+    }
+
+
+    catch (
+        erro
+    ) {
+
+        console.error(
+
+            "Erro ao recuperar estado da aplicação:",
 
             erro
 
