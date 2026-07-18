@@ -1818,19 +1818,90 @@ function montarPayload() {
 
 }
 
+function montarPalpitesParaSalvar() {
+
+    const palpites = [];
+
+    OITAVAS.forEach(
+        function(jogo) {
+
+            const scores =
+                state.scores[jogo.id];
+
+
+            /*
+             * ========================================================
+             * JOGO DE IDA
+             * ========================================================
+             */
+
+            palpites.push({
+
+                jogoId:
+                    `${jogo.id}-J1`,
+
+                golsMandante:
+                    Number(
+                        scores.idaCasa
+                    ),
+
+                golsVisitante:
+                    Number(
+                        scores.idaFora
+                    )
+
+            });
+
+
+            /*
+             * ========================================================
+             * JOGO DE VOLTA
+             * ========================================================
+             */
+
+            palpites.push({
+
+                jogoId:
+                    `${jogo.id}-J2`,
+
+                golsMandante:
+                    Number(
+                        scores.voltaCasa
+                    ),
+
+                golsVisitante:
+                    Number(
+                        scores.voltaFora
+                    )
+
+            });
+
+        }
+    );
+
+
+    return palpites;
+
+}
 
 // ============================================================================
 // ENVIO DO FORMULÁRIO
 // ============================================================================
 
-function handleSubmit() {
+async function handleSubmit() {
 
-    const mensagem = validar();
+    const mensagem =
+        validar();
 
 
-    if (mensagem) {
+    if (
+        mensagem
+    ) {
 
-        mostrarErro(mensagem);
+        mostrarErro(
+            mensagem
+        );
+
 
         return;
 
@@ -1840,37 +1911,100 @@ function handleSubmit() {
     limparErro();
 
 
-    const payload = montarPayload();
+    /*
+     * ============================================================
+     * MONTA O LOTE DE PALPITES
+     * ============================================================
+     */
+
+    const palpites =
+        montarPalpitesParaSalvar();
 
 
-    // ========================================================================
-    // MODO DE TESTE
-    // ========================================================================
-
-    state.payloadDebug = payload;
-
-    state.enviado = true;
+    console.log(
+        "Palpites a salvar:",
+        palpites
+    );
 
 
-    mostrarTelaSucesso();
+    try {
 
 
-    // ========================================================================
-    // FUTURA INTEGRAÇÃO COM GOOGLE APPS SCRIPT
-    // ========================================================================
-    //
-    // fetch("SUA_URL_DO_APPS_SCRIPT_AQUI", {
-    //
-    //     method: "POST",
-    //
-    //     body: JSON.stringify(payload)
-    //
-    // });
-    //
-    // ========================================================================
+        /*
+         * ========================================================
+         * ENVIA TODOS OS PALPITES EM UMA ÚNICA REQUISIÇÃO
+         * ========================================================
+         */
+
+        const resposta =
+            await apiSalvarPalpitesLote(
+                palpites
+            );
+
+
+        console.log(
+            "Resposta da API:",
+            resposta
+        );
+
+
+        if (
+            !resposta ||
+            !resposta.success
+        ) {
+
+            mostrarErro(
+
+                resposta?.message ||
+
+                "Não foi possível salvar os palpites."
+
+            );
+
+
+            return;
+
+        }
+
+
+        /*
+         * ========================================================
+         * SUCESSO
+         * ========================================================
+         */
+
+        state.enviado =
+            true;
+
+
+        state.payloadDebug =
+            montarPayload();
+
+
+        mostrarTelaSucesso();
+
+    }
+
+
+    catch (
+        erro
+    ) {
+
+        console.error(
+            "Erro ao salvar palpites:",
+            erro
+        );
+
+
+        mostrarErro(
+
+            "Ocorreu um erro ao salvar os palpites."
+
+        );
+
+    }
 
 }
-
 
 // ============================================================================
 // TELA DE SUCESSO
