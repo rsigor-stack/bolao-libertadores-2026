@@ -2517,7 +2517,7 @@ function recuperarEstadoAplicacao() {
 
                 : [];
 
-
+        console.log("DADOS RECUPERADOS COM SUCESSO!");
         return true;
 
     }
