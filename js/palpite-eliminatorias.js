@@ -79,7 +79,9 @@ function inicializarConfrontos() {
 }
 
 function aguardarConfrontos() {
-
+    
+    recuperarEstadoAplicacao();
+    
     const timer = setInterval(() => {
 
         console.log(
