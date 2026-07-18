@@ -1822,7 +1822,15 @@ function montarPalpitesParaSalvar() {
 
     const palpites = [];
 
+
+    /*
+     * ============================================================
+     * 1. OITAVAS — 16 PALPITES DE PLACAR
+     * ============================================================
+     */
+
     OITAVAS.forEach(
+
         function(jogo) {
 
             const scores =
@@ -1830,14 +1838,18 @@ function montarPalpitesParaSalvar() {
 
 
             /*
-             * ========================================================
              * JOGO DE IDA
-             * ========================================================
              */
 
             palpites.push({
 
-                jogoId:
+                fase:
+                    "Oitavas",
+
+                tipoPalpite:
+                    "PLACAR",
+
+                referenciaId:
                     `${jogo.id}-J1`,
 
                 golsMandante:
@@ -1854,14 +1866,18 @@ function montarPalpitesParaSalvar() {
 
 
             /*
-             * ========================================================
              * JOGO DE VOLTA
-             * ========================================================
              */
 
             palpites.push({
 
-                jogoId:
+                fase:
+                    "Oitavas",
+
+                tipoPalpite:
+                    "PLACAR",
+
+                referenciaId:
                     `${jogo.id}-J2`,
 
                 golsMandante:
@@ -1877,7 +1893,197 @@ function montarPalpitesParaSalvar() {
             });
 
         }
+
     );
+
+
+    /*
+     * ============================================================
+     * 2. QUARTAS — 8 TIMES
+     * ============================================================
+     *
+     * Cada confronto possui dois times:
+     *
+     * q1-A
+     * q1-B
+     *
+     * q2-A
+     * q2-B
+     *
+     * etc.
+     */
+
+    const quartas =
+        obterQuartasComNomes();
+
+
+    quartas.forEach(
+
+        function(q) {
+
+
+            palpites.push({
+
+                fase:
+                    "Quartas",
+
+                tipoPalpite:
+                    "CLASSIFICADO",
+
+                referenciaId:
+                    `${q.id}-A`,
+
+                valor:
+                    q.opcaoA
+
+            });
+
+
+            palpites.push({
+
+                fase:
+                    "Quartas",
+
+                tipoPalpite:
+                    "CLASSIFICADO",
+
+                referenciaId:
+                    `${q.id}-B`,
+
+                valor:
+                    q.opcaoB
+
+            });
+
+        }
+
+    );
+
+
+    /*
+     * ============================================================
+     * 3. SEMIFINAIS — 4 TIMES
+     * ============================================================
+     */
+
+    const semis =
+        obterSemisComNomes();
+
+
+    semis.forEach(
+
+        function(semi) {
+
+
+            palpites.push({
+
+                fase:
+                    "Semis",
+
+                tipoPalpite:
+                    "CLASSIFICADO",
+
+                referenciaId:
+                    `${semi.id}-A`,
+
+                valor:
+                    semi.opcaoA
+
+            });
+
+
+            palpites.push({
+
+                fase:
+                    "Semis",
+
+                tipoPalpite:
+                    "CLASSIFICADO",
+
+                referenciaId:
+                    `${semi.id}-B`,
+
+                valor:
+                    semi.opcaoB
+
+            });
+
+        }
+
+    );
+
+
+    /*
+     * ============================================================
+     * 4. FINAL — 2 TIMES
+     * ============================================================
+     */
+
+    const final =
+        obterFinal();
+
+
+    palpites.push({
+
+        fase:
+            "Final",
+
+        tipoPalpite:
+            "CLASSIFICADO",
+
+        referenciaId:
+            "FINAL-A",
+
+        valor:
+            final.opcaoA
+
+    });
+
+
+    palpites.push({
+
+        fase:
+            "Final",
+
+        tipoPalpite:
+            "CLASSIFICADO",
+
+        referenciaId:
+            "FINAL-B",
+
+        valor:
+            final.opcaoB
+
+    });
+
+
+    /*
+     * ============================================================
+     * 5. CAMPEÃO — 1 TIME
+     * ============================================================
+     */
+
+    if (
+        state.final
+    ) {
+
+        palpites.push({
+
+            fase:
+                "Campeao",
+
+            tipoPalpite:
+                "CAMPEAO",
+
+            referenciaId:
+                "CAMPEAO",
+
+            valor:
+                state.final
+
+        });
+
+    }
 
 
     return palpites;
