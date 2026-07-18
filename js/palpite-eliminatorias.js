@@ -2231,7 +2231,7 @@ function mostrarTelaSucesso() {
 
     get("mensagem-sucesso").textContent =
 
-        "Seu palpite para as Oitavas da Libertadores foi recebido.";
+        "Seus palpites foram recebidos.";
 
 
     get("payload-debug").textContent =
