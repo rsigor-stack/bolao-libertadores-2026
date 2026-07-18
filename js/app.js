@@ -130,6 +130,27 @@ function mostrarTelaPrincipal() {
     App.telaAtual =
         "principal";
 
+
+    const linkEliminatorias =
+        document.getElementById(
+            "link-eliminatorias"
+        );
+    
+    
+    if (
+        linkEliminatorias
+    ) {
+    
+        linkEliminatorias.addEventListener(
+    
+            "click",
+    
+            prepararAcessoEliminatorias
+    
+        );
+    
+    }
+    
 }
 
 /**
@@ -3151,6 +3172,47 @@ function resolverParticipanteConfronto(
         palpite.valor
         ??
         palpite.Valor
+
+    );
+
+}
+function prepararAcessoEliminatorias() {
+
+    const sessao =
+        obterSessao();
+
+
+    if (
+        !sessao ||
+        !sessao.token
+    ) {
+
+        return;
+
+    }
+
+
+    const contexto = {
+
+        token:
+            sessao.token,
+
+        participante:
+            sessao.participante,
+
+        palpites:
+            App.palpites
+
+    };
+
+
+    sessionStorage.setItem(
+
+        "contextoEliminatorias",
+
+        JSON.stringify(
+            contexto
+        )
 
     );
 
