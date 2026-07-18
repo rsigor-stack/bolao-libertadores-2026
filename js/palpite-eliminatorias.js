@@ -148,6 +148,7 @@ console.log(
         .length
 );
 
+
 inicializarConfrontos();
 
 function adaptarConfronto(confronto) {
@@ -2384,5 +2385,76 @@ if (
 else {
 
     aguardarConfrontos();
+
+}
+function recuperarContextoEliminatorias() {
+
+    const dados =
+        sessionStorage.getItem(
+            "contextoEliminatorias"
+        );
+
+
+    if (
+        !dados
+    ) {
+
+        console.warn(
+            "Contexto das eliminatórias não encontrado."
+        );
+
+
+        return false;
+
+    }
+
+
+    try {
+
+        const contexto =
+            JSON.parse(
+                dados
+            );
+
+
+        if (
+            !contexto.token
+        ) {
+
+            return false;
+
+        }
+
+
+        App.palpites =
+            Array.isArray(
+                contexto.palpites
+            )
+
+                ? contexto.palpites
+
+                : [];
+
+
+        return true;
+
+    }
+
+    catch (
+        erro
+    ) {
+
+        console.error(
+
+            "Erro ao recuperar contexto das eliminatórias:",
+
+            erro
+
+        );
+
+
+        return false;
+
+    }
 
 }
