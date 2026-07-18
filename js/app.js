@@ -658,6 +658,7 @@ async function carregarDadosAplicacao() {
 
         App.palpites =
             respostaPalpites.data;
+        salvarEstadoAplicacao();
 
         /*
          * ============================================================
@@ -3212,6 +3213,34 @@ function prepararAcessoEliminatorias() {
 
         JSON.stringify(
             contexto
+        )
+
+    );
+
+}
+
+function salvarEstadoAplicacao() {
+
+    const estado = {
+
+        jogos:
+            App.jogos,
+
+        confrontos:
+            App.confrontos,
+
+        palpites:
+            App.palpites
+
+    };
+
+
+    sessionStorage.setItem(
+
+        "estadoAplicacao",
+
+        JSON.stringify(
+            estado
         )
 
     );
