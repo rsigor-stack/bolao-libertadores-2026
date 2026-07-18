@@ -2034,7 +2034,7 @@ if (
 
         "DOMContentLoaded",
 
-        aguardarDados
+        aguardarConfrontos
 
     );
 
@@ -2042,6 +2042,6 @@ if (
 
 else {
 
-    aguardarDados();
+    aguardarConfrontos();
 
 }
