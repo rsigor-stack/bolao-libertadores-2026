@@ -72,6 +72,7 @@ function inicializarConfrontos() {
 
     carregarPalpitesExistentes();
 
+    renderOitavas();
 
     return true;
 
