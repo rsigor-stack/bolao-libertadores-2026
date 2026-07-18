@@ -77,42 +77,28 @@ function inicializarConfrontos() {
 
 }
 
-function aguardarDados() {
+function aguardarConfrontos() {
 
     const timer = setInterval(() => {
 
-        const confrontosCarregados =
+        console.log(
+            "Aguardando confrontos...",
+            App?.confrontos?.length
+        );
+
+
+        if (
 
             typeof App !== "undefined" &&
 
             Array.isArray(App.confrontos) &&
 
-            App.confrontos.length >= 15;
-
-
-        const palpitesCarregados =
-
-            typeof App !== "undefined" &&
-
-            Array.isArray(App.palpites) &&
-
-             App.palpites.some(p =>
-
-                 p.Fase === "Oitavas" &&
-    
-                 p.TipoPalpite === "PLACAR"
-                 );
-
-        if (
-
-            confrontosCarregados &&
-
-            palpitesCarregados
+            App.confrontos.length >= 15
 
         ) {
 
             console.log(
-                "Confrontos e palpites carregados."
+                "Condição satisfeita. Inicializando confrontos."
             );
 
 
@@ -120,11 +106,24 @@ function aguardarDados() {
 
 
             const inicializado =
-
                 inicializarConfrontos();
 
 
+            console.log(
+                "Resultado da inicialização:",
+                inicializado
+            );
+
+
+            console.log(
+                "OITAVAS após inicialização:",
+                OITAVAS
+            );
+
+
             if (inicializado) {
+
+                carregarPalpitesExistentes();
 
                 init();
 
