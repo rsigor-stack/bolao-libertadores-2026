@@ -97,62 +97,25 @@ function mostrarTelaLogin() {
 
 }
 
-function mostrarTelaPrincipal() {
+function mostrarTelaPrincipal(tela) {
+    const secoes = {
+        jogos: document.getElementById("secao-jogos"),
+        ranking: document.getElementById("secao-ranking"),
+        eliminatorias: document.getElementById("secao-eliminatorias")
+    };
 
-    const telaLogin =
-        document.getElementById(
-            "tela-login"
-        );
+    Object.values(secoes).forEach(secao => {
+        if (secao) secao.hidden = true;
+    });
 
-
-    const telaPrincipal =
-        document.getElementById(
-            "tela-principal"
-        );
-
-
-    if (telaLogin) {
-
-        telaLogin.hidden =
-            true;
-
+    if (secoes[tela]) {
+        secoes[tela].hidden = false;
     }
 
-
-    if (telaPrincipal) {
-
-        telaPrincipal.hidden =
-            false;
-
-    }
-
-
-    App.telaAtual =
-        "principal";
-
-
-    const linkEliminatorias =
-        document.getElementById(
-            "link-eliminatorias"
-        );
-    
-    
-    if (
-        linkEliminatorias
-    ) {
-    
-        linkEliminatorias.addEventListener(
-    
-            "click",
-    
-            prepararAcessoEliminatorias
-    
-        );
-    
-    }
-    
+    document.querySelectorAll("#navegacao-principal .nav-btn").forEach(btn => {
+        btn.classList.toggle("ativo", btn.dataset.tela === tela);
+    });
 }
-
 /**
  * ============================================================================
  * LOGIN
