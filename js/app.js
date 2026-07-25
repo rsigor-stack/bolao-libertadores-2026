@@ -217,7 +217,7 @@ async function realizarLogin() {
 
         atualizarTitulos();
 
-        mostrarTelaPrincipal();
+        mostrarTelaPrincipal("tela-principal");
 
         await carregarDadosAplicacao();
 
